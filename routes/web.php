@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\NotificationController;
+use Illuminate\Notifications\DatabaseNotification;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +26,12 @@ Route::get('/', function () {
 
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $notifications = DatabaseNotification::latest()->take(5)->get();
+    $unreadCount = DatabaseNotification::whereNull('read_at')->count();
+    return view('dashboard',[
+        'unreadCount' => $unreadCount,
+        'notifications' => $notifications,
+    ]);
 })->name('dashboard');
 
 Route::get('/login', [LoginController::class,'index'])->name('login');
