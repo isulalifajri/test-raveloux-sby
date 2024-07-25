@@ -27,18 +27,18 @@ class ClientController extends Controller
 
 
     public function store(Request $request){
+        $rules = [
+            'contact_name' => ['required'],
+            'contact_email' => ['required','unique:clients'],
+            'contact_phone_number' => ['required','numeric'],
+            'company_name' => ['required'],
+            'company_address' => ['required'],
+            'company_city' => ['required'],
+            'company_zip' => ['required'],
+            'company_vat' => ['required','numeric'],
+        ];
+        
         try {
-            $rules = [
-                'contact_name' => ['required'],
-                'contact_email' => ['required','unique:clients'],
-                'contact_phone_number' => ['required','numeric'],
-                'company_name' => ['required'],
-                'company_address' => ['required'],
-                'company_city' => ['required'],
-                'company_zip' => ['required'],
-                'company_vat' => ['required','numeric'],
-            ];
-    
             
             $validatedData = $request->validate($rules);
     
@@ -60,18 +60,18 @@ class ClientController extends Controller
 
     public function update(Request $request, Client $client )
     {
+        $validatedData = $request->validate([
+            'contact_name' => ['required'],
+            'contact_email' => ['required', 'email', 'max:250', 'unique:clients,contact_email,'.$client->id],
+            'contact_phone_number' => ['required','numeric'],
+            'company_name' => ['required'],
+            'company_address' => ['required'],
+            'company_city' => ['required'],
+            'company_zip' => ['required'],
+            'company_vat' => ['required','numeric'],
+        ]);
+        
         try {
-            $validatedData = $request->validate([
-                'contact_name' => ['required'],
-                'contact_email' => ['required', 'email', 'max:250', 'unique:clients,contact_email,'.$client->id],
-                'contact_phone_number' => ['required','numeric'],
-                'company_name' => ['required'],
-                'company_address' => ['required'],
-                'company_city' => ['required'],
-                'company_zip' => ['required'],
-                'company_vat' => ['required','numeric'],
-            ]);
-    
             $client->update($validatedData);
     
             return redirect()->route('clients')->with('success', 'Data Berhasil di Edit');

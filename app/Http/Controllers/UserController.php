@@ -30,16 +30,16 @@ class UserController extends Controller
 
 
     public function store(Request $request){
+        $rules = [
+            'first_name' => ['required'],
+            'last_name' => ['nullable'],
+            'email' => ['required','unique:users'],
+            'address' => ['required'],
+            'phone_number' => ['required','numeric'],
+            'password' => ['required'],
+        ];
+        
         try {
-            $rules = [
-                'first_name' => ['required'],
-                'last_name' => ['nullable'],
-                'email' => ['required','unique:users'],
-                'address' => ['required'],
-                'phone_number' => ['required','numeric'],
-                'password' => ['required'],
-            ];
-    
             
             $validatedData = $request->validate($rules);
             $validatedData['password'] = bcrypt($request->input('password'));
@@ -62,15 +62,15 @@ class UserController extends Controller
 
     public function update(Request $request, User $user )
     {
+        $validatedData = $request->validate([
+            'first_name' => ['required'],
+            'last_name' => ['nullable'],
+            'email' => ['required', 'email', 'max:250', 'unique:users,email,'.$user->id],
+            'address' => ['required'],
+            'phone_number' => ['required','numeric'],
+            'password' => ['required'],
+        ]);
         try {
-            $validatedData = $request->validate([
-                'first_name' => ['required'],
-                'last_name' => ['nullable'],
-                'email' => ['required', 'email', 'max:250', 'unique:users,email,'.$user->id],
-                'address' => ['required'],
-                'phone_number' => ['required','numeric'],
-                'password' => ['required'],
-            ]);
     
             if ($request->filled('password')) {
                 $validatedData['password'] = bcrypt($request->input('password'));

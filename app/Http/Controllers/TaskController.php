@@ -38,17 +38,17 @@ class TaskController extends Controller
     }
 
     public function store(Request $request){
+        $rules = [
+            'title' => ['required'],
+            'description' => ['required'],
+            'deadline' => ['required'],
+            'user_id' => ['required'],
+            'client_id' => ['required'],
+            'project_id' => ['required'],
+            'status' => ['required','string'],
+        ];
         try {
-            $rules = [
-                'title' => ['required'],
-                'description' => ['required'],
-                'deadline' => ['required'],
-                'user_id' => ['required'],
-                'client_id' => ['required'],
-                'project_id' => ['required'],
-                'status' => ['required','string'],
-            ];
-     
+        
             $validatedData = $request->validate($rules);
             $task = Task::create($validatedData);
             $user = User::where('first_name', 'admin')->get();
@@ -73,16 +73,16 @@ class TaskController extends Controller
 
     public function update(Request $request, Task $task )
     {
+        $validatedData = $request->validate([
+            'title' => ['required'],
+            'description' => ['required'],
+            'deadline' => ['required'],
+            'user_id' => ['required'],
+            'client_id' => ['required'],
+            'project_id' => ['required'],
+            'status' => ['required','string'],
+        ]);
         try {
-            $validatedData = $request->validate([
-                'title' => ['required'],
-                'description' => ['required'],
-                'deadline' => ['required'],
-                'user_id' => ['required'],
-                'client_id' => ['required'],
-                'project_id' => ['required'],
-                'status' => ['required','string'],
-            ]);
     
             $task->update($validatedData);
     

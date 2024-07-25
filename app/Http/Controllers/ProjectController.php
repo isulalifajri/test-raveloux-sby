@@ -34,15 +34,15 @@ class ProjectController extends Controller
     }
 
     public function store(Request $request){
+        $rules = [
+            'title' => ['required'],
+            'description' => ['required'],
+            'deadline' => ['required'],
+            'user_id' => ['required'],
+            'client_id' => ['required'],
+            'status' => ['required','string'],
+        ];
         try {
-            $rules = [
-                'title' => ['required'],
-                'description' => ['required'],
-                'deadline' => ['required'],
-                'user_id' => ['required'],
-                'client_id' => ['required'],
-                'status' => ['required','string'],
-            ];
      
             $validatedData = $request->validate($rules);
             Project::create($validatedData);
@@ -65,16 +65,16 @@ class ProjectController extends Controller
 
     public function update(Request $request, Project $project )
     {
+        $validatedData = $request->validate([
+            'title' => ['required'],
+            'description' => ['required'],
+            'deadline' => ['required'],
+            'user_id' => ['required'],
+            'client_id' => ['required'],
+            'status' => ['required','string'],
+        ]);
+        
         try {
-            $validatedData = $request->validate([
-                'title' => ['required'],
-                'description' => ['required'],
-                'deadline' => ['required'],
-                'user_id' => ['required'],
-                'client_id' => ['required'],
-                'status' => ['required','string'],
-            ]);
-    
             $project->update($validatedData);
     
             return redirect()->route('projects')->with('success', 'Data Berhasil di Edit');
