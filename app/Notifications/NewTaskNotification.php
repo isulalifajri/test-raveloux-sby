@@ -46,7 +46,8 @@ class NewTaskNotification extends Notification
                 ->subject('Ada Task Baru')
                 ->greeting('Hello! ' . $notifiable->first_name)
                 ->line('Ada Tugas Baru dengan nama : '. $this->task->title. ', Deadline '.$this->task->deadline)
-                ->action('View Detail', url('tasks/detail/'.$this->task->id))
+                // ->action('View Detail', url('tasks/detail/'.$this->task->id))
+                ->action('View Detail', route('detail-notification', $this->id))
                 ->line('Thanks')
                 ->salutation('Regards,')
                 ->salutation('Raveloux Surabaya');
