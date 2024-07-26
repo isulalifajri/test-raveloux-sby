@@ -39,8 +39,8 @@
                 Authentication
             </li>
 
-            <li class="sidebar-item {{ Request::is('settings*') ? 'active' : '' }}">
-                <a class="sidebar-link" href="#">
+            <li class="sidebar-item {{ Request::is('password*') ? 'active' : '' }}">
+                <a class="sidebar-link" href="{{ route('password.request') }}">
                 <i class="align-middle" data-feather="settings"></i> <span class="align-middle">Reset Password</span></a>
             </li> 
 
