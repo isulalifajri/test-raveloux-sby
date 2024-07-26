@@ -152,7 +152,7 @@ Route::group(['middleware' => ['auth','notification']], function () {
      
         return $status === Password::PASSWORD_RESET
                     ? redirect()->route('password.request')->with('success', __($status))
-                    : back()->withErrors(['success-danger' => [__($status)]]);
+                    : back()->withErrors(['email' => [__($status)]]);
     })->name('password.update');
 
 });
