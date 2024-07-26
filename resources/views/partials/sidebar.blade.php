@@ -31,6 +31,17 @@
                 <a class="sidebar-link" href="{{ route('tasks') }}">
                 <i class="align-middle" data-feather="list"></i> <span class="align-middle">Tasks</span></a>
             </li>
+
+            <li class="sidebar-header">
+                Authentication
+            </li>
+
+            <li class="sidebar-item">
+                <form action="/logout" method="POST">
+                    @csrf
+                    <button type="submit" class="sidebar-link border-0"><i class="align-middle" data-feather="log-out"></i> <span class="align-middle">Log out</span></button>
+                </form>
+            </li>
             
         </ul>
 

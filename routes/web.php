@@ -21,8 +21,8 @@ use Illuminate\Notifications\DatabaseNotification;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('auth.login');
+})->name('home');
 
 
 Route::get('/dashboard', function () {
@@ -32,11 +32,11 @@ Route::get('/dashboard', function () {
         'unreadCount' => $unreadCount,
         'notifications' => $notifications,
     ]);
-})->name('dashboard');
+})->name('dashboard')->middleware('auth');
 
 Route::get('/login', [LoginController::class,'index'])->name('login');
 
-Route::group(['middleware' => ['notification']], function () {
+Route::group(['middleware' => ['auth','notification']], function () {
     // users
     Route::get('users', [UserController::class,'index'])->name('users');
     Route::get('users/create', [UserController::class,'create'])->name('create.users');
@@ -93,4 +93,12 @@ Route::group(['middleware' => ['notification']], function () {
     Route::get('detail-notification/{notification}', [NotificationController::class, 'detailNotification'])->name('detail-notification');
     Route::put('mark-as-read/{id}', [NotificationController::class, 'markAsRead'])->name('mark-as-read');
 
+    // logout
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+});
+
+Route::group(['middleware' => 'guest'], function () {
+    Route::get('/login', [LoginController::class, 'login'])->name('login');
+    Route::post('/authenticate', [LoginController::class, 'authenticate'])->name('authenticate');
 });

@@ -38,24 +38,39 @@
 						<div class="card">
 							<div class="card-body">
 								<div class="m-sm-3">
-									<form>
-										<div class="mb-3">
-											<label class="form-label">Email</label>
-											<input class="form-control form-control-lg" type="email" name="email" placeholder="Enter your email" />
+									<form action="{{ route('authenticate') }}" method="POST">
+										@csrf
+										<label for="email" class="form-label">Email:</label>
+										<div class="input-group mb-3">
+											<span class="input-group-text" id="basic-addon1"><i data-feather="mail"></i></span>
+											<input type="text" class="form-control @error('email') is-invalid @enderror" name="email" id="email">
+											@error('email')
+												<div class="invalid-feedback d-block">
+													{{ $message }}
+												</div>
+											@enderror
 										</div>
-										<div class="mb-3">
-											<label class="form-label">Password</label>
-											<input class="form-control form-control-lg" type="password" name="password" placeholder="Enter your password" />
+						
+										<label for="password" class="form-label">Password:</label>
+										<div class="input-group mb-1">
+											<span class="input-group-text" id="basic-addon1"><i data-feather="lock"></i></span>
+											<input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="password">
+											@error('password')
+												<div class="invalid-feedback d-block">
+													{{ $message }}
+												</div>
+											@enderror
 										</div>
-										<div>
-											<div class="form-check align-items-center">
-												<input id="customControlInline" type="checkbox" class="form-check-input" value="remember-me" name="remember-me" checked>
-												<label class="form-check-label text-small" for="customControlInline">Remember me</label>
-											</div>
+										<div class="form-check mb-3">
+											<input class="form-check-input" type="checkbox" onclick="myFunction()" id="defaultCheck1">
+											<label class="form-check-label" for="defaultCheck1">
+												Tampilkan Password
+											</label>
 										</div>
-										<div class="d-grid gap-2 mt-3">
-											<a href="index.html" class="btn btn-lg btn-primary">Sign in</a>
-										</div>
+						
+										<button type="submit" class="btn btn-primary">Login</button>
+										
+						
 									</form>
 								</div>
 							</div>
@@ -71,6 +86,16 @@
 
 	<script src="{{ asset('asset/js/app.js') }}"></script>
 
+    <script>
+        function myFunction() {
+        var x = document.getElementById("password");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+        }
+    </script>
 </body>
 
 </html>
