@@ -23,7 +23,11 @@ class LoginController extends Controller
                 'email' => 'Your provided credentials do not match in our records.',
             ]);
         }
+        // if(Auth::user()->hasRole('admin')){
             return redirect()->intended('dashboard');
+        // }else{
+        //     return 'anda adalah user';
+        // }
     }
 
     public function logout(Request $request)

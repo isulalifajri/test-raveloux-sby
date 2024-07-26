@@ -44,7 +44,9 @@ class UserController extends Controller
             $validatedData = $request->validate($rules);
             $validatedData['password'] = bcrypt($request->input('password'));
     
-            User::create($validatedData);
+            $user = User::create($validatedData);
+
+            $user->givePermissionTo('detail');
     
             return redirect()->route('users')->with('success', 'Data Berhasil ditambahkan');
         } catch (\Exception $th) {

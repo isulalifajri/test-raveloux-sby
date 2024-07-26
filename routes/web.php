@@ -45,47 +45,47 @@ Route::group(['middleware' => ['auth','notification']], function () {
     Route::put('users/{user}/update', [UserController::class,'update'])->name('update.users')->middleware(['role:admin']);
     Route::delete('users/{user}/destroy', [UserController::class,'destroy'])->name('destroy.users')->middleware(['role:admin']);
 
-    Route::get('users/softDelete', [UserController::class,'softDelete'])->name('softDeletes.users');
-    Route::get('users/{id}/restore', [UserController::class, 'restoreData'])->name('restore.users');
-    Route::delete('users/{id}/forcedelete/', [UserController::class,'forcedelete'])->name('forcedelete.users');
+    Route::get('users/softDelete', [UserController::class,'softDelete'])->name('softDeletes.users')->middleware('role:admin');
+    Route::get('users/{id}/restore', [UserController::class, 'restoreData'])->name('restore.users')->middleware('role:admin');
+    Route::delete('users/{id}/forcedelete/', [UserController::class,'forcedelete'])->name('forcedelete.users')->middleware('role:admin');
 
     // clients
-    Route::get('clients', [ClientController::class,'index'])->name('clients');
-    Route::get('clients/create', [ClientController::class,'create'])->name('create.clients');
-    Route::post('clients/store', [ClientController::class,'store'])->name('store.clients');
-    Route::get('clients/{client}/edit', [ClientController::class,'edit'])->name('edit.clients');
-    Route::put('clients/{client}/update', [ClientController::class,'update'])->name('update.clients');
-    Route::delete('clients/{client}/destroy', [ClientController::class,'destroy'])->name('destroy.clients');
+    Route::get('clients', [ClientController::class,'index'])->name('clients')->middleware('role:admin');
+    Route::get('clients/create', [ClientController::class,'create'])->name('create.clients')->middleware('role:admin');
+    Route::post('clients/store', [ClientController::class,'store'])->name('store.clients')->middleware('role:admin');
+    Route::get('clients/{client}/edit', [ClientController::class,'edit'])->name('edit.clients')->middleware('role:admin');
+    Route::put('clients/{client}/update', [ClientController::class,'update'])->name('update.clients')->middleware('role:admin');
+    Route::delete('clients/{client}/destroy', [ClientController::class,'destroy'])->name('destroy.clients')->middleware('role:admin');
 
-    Route::get('clients/softDelete', [ClientController::class,'softDelete'])->name('softDeletes.clients');
-    Route::get('clients/{id}/restore', [ClientController::class, 'restoreData'])->name('restore.clients');
-    Route::delete('clients/{id}/forcedelete/', [ClientController::class,'forcedelete'])->name('forcedelete.clients');
+    Route::get('clients/softDelete', [ClientController::class,'softDelete'])->name('softDeletes.clients')->middleware('role:admin');
+    Route::get('clients/{id}/restore', [ClientController::class, 'restoreData'])->name('restore.clients')->middleware('role:admin');
+    Route::delete('clients/{id}/forcedelete/', [ClientController::class,'forcedelete'])->name('forcedelete.clients')->middleware('role:admin');
 
     // projects
-    Route::get('projects', [ProjectController::class,'index'])->name('projects');
-    Route::get('projects/create', [ProjectController::class,'create'])->name('create.projects');
-    Route::post('projects/store', [ProjectController::class,'store'])->name('store.projects');
-    Route::get('projects/{project}/edit', [ProjectController::class,'edit'])->name('edit.projects');
-    Route::put('projects/{project}/update', [ProjectController::class,'update'])->name('update.projects');
-    Route::delete('projects/{project}/destroy', [ProjectController::class,'destroy'])->name('destroy.projects');
+    Route::get('projects', [ProjectController::class,'index'])->name('projects')->middleware('role:admin');
+    Route::get('projects/create', [ProjectController::class,'create'])->name('create.projects')->middleware('role:admin');
+    Route::post('projects/store', [ProjectController::class,'store'])->name('store.projects')->middleware('role:admin');
+    Route::get('projects/{project}/edit', [ProjectController::class,'edit'])->name('edit.projects')->middleware('role:admin');
+    Route::put('projects/{project}/update', [ProjectController::class,'update'])->name('update.projects')->middleware('role:admin');
+    Route::delete('projects/{project}/destroy', [ProjectController::class,'destroy'])->name('destroy.projects')->middleware('role:admin');
 
-    Route::get('projects/softDelete', [ProjectController::class,'softDelete'])->name('softDeletes.projects');
-    Route::get('projects/{id}/restore', [ProjectController::class, 'restoreData'])->name('restore.projects');
-    Route::delete('projects/{id}/forcedelete/', [ProjectController::class,'forcedelete'])->name('forcedelete.projects');
+    Route::get('projects/softDelete', [ProjectController::class,'softDelete'])->name('softDeletes.projects')->middleware('role:admin');
+    Route::get('projects/{id}/restore', [ProjectController::class, 'restoreData'])->name('restore.projects')->middleware('role:admin');
+    Route::delete('projects/{id}/forcedelete/', [ProjectController::class,'forcedelete'])->name('forcedelete.projects')->middleware('role:admin');
 
 
     // tasks
     Route::get('tasks', [TaskController::class,'index'])->name('tasks');
-    Route::get('tasks/create', [TaskController::class,'create'])->name('create.tasks');
-    Route::post('tasks/store', [TaskController::class,'store'])->name('store.tasks');
-    Route::get('tasks/{task}/edit', [TaskController::class,'edit'])->name('edit.tasks');
-    Route::put('tasks/{task}/update', [TaskController::class,'update'])->name('update.tasks');
-    Route::delete('tasks/{task}/destroy', [TaskController::class,'destroy'])->name('destroy.tasks');
+    Route::get('tasks/create', [TaskController::class,'create'])->name('create.tasks')->middleware('role:admin');
+    Route::post('tasks/store', [TaskController::class,'store'])->name('store.tasks')->middleware('role:admin');
+    Route::get('tasks/{task}/edit', [TaskController::class,'edit'])->name('edit.tasks')->middleware('role:admin');
+    Route::put('tasks/{task}/update', [TaskController::class,'update'])->name('update.tasks')->middleware('role:admin');
+    Route::delete('tasks/{task}/destroy', [TaskController::class,'destroy'])->name('destroy.tasks')->middleware('role:admin');
     Route::get('tasks/detail/{task}', [TaskController::class,'detail'])->name('detail.tasks');
 
-    Route::get('tasks/softDelete', [TaskController::class,'softDelete'])->name('softDeletes.tasks');
-    Route::get('tasks/{id}/restore', [TaskController::class, 'restoreData'])->name('restore.tasks');
-    Route::delete('tasks/{id}/forcedelete/', [TaskController::class,'forcedelete'])->name('forcedelete.tasks');
+    Route::get('tasks/softDelete', [TaskController::class,'softDelete'])->name('softDeletes.tasks')->middleware('role:admin');
+    Route::get('tasks/{id}/restore', [TaskController::class, 'restoreData'])->name('restore.tasks')->middleware('role:admin');
+    Route::delete('tasks/{id}/forcedelete/', [TaskController::class,'forcedelete'])->name('forcedelete.tasks')->middleware('role:admin');
 
 
     // route notifications
@@ -96,8 +96,17 @@ Route::group(['middleware' => ['auth','notification']], function () {
     // logout
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
+    // test permission
+    Route::get('testPermission', function () {
+        return 'test permission';
+    })->middleware(['permission:detail']);
+    Route::get('testPermission1', function () {
+        return 'test permission1';
+    })->middleware(['role_or_permission:detail|admin']);
+
 });
 
+// login
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/login', [LoginController::class, 'login'])->name('login');
     Route::post('/authenticate', [LoginController::class, 'authenticate'])->name('authenticate');

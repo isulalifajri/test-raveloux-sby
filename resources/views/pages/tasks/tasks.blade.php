@@ -4,10 +4,12 @@
     <div class="container-fluid p-0">
 
         <h1 class="h3 mb-3"><strong>Data Tasks</h1>
-            <div class="d-flex gap-1">
-                <a href="{{ route('create.tasks') }}" class="btn btn-primary">Tambah Data</a>
-                <a href="{{ route('softDeletes.tasks') }}" class="btn btn-warning">softDeletes</a>
-            </div>
+            @can('admin')
+                <div class="d-flex gap-1">
+                    <a href="{{ route('create.tasks') }}" class="btn btn-primary">Tambah Data</a>
+                    <a href="{{ route('softDeletes.tasks') }}" class="btn btn-warning">softDeletes</a>
+                </div>
+            @endcan
             <div class="table-responsive">
                 <table class="table table-hover my-0">
                     <thead>
@@ -34,12 +36,15 @@
                                 <td><span class="badge bg-primary">{{ $item->status }}</span></td>
                                 <td>
                                     <div class="d-flex gap-1">
-                                        <a href="{{ route('edit.tasks', $item->id) }}" class="btn btn-info btn-sm">Edit</a>
-                                        <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('destroy.tasks', $item->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                                        </form>
+                                        <a href="{{ route('detail.tasks', $item->id) }}" class="btn btn-primary btn-sm">Detail</a>
+                                        @if (auth()->user()->hasRole('admin'))
+                                            <a href="{{ route('edit.tasks', $item->id) }}" class="btn btn-info btn-sm">Edit</a>
+                                            <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('destroy.tasks', $item->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                            </form>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
