@@ -109,6 +109,9 @@ Route::group(['middleware' => ['auth','notification']], function () {
         return 'test permission1';
     })->middleware(['role_or_permission:detail|admin']);
 
+    // profile
+    
+
     // Reset Password
     Route::get('/password/forgot-password', function () {
         return view('auth.forgot-password');
