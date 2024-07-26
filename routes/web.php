@@ -38,12 +38,12 @@ Route::get('/login', [LoginController::class,'index'])->name('login');
 
 Route::group(['middleware' => ['auth','notification']], function () {
     // users
-    Route::get('users', [UserController::class,'index'])->name('users');
-    Route::get('users/create', [UserController::class,'create'])->name('create.users');
-    Route::post('users/store', [UserController::class,'store'])->name('store.users');
-    Route::get('users/{user}/edit', [UserController::class,'edit'])->name('edit.users');
-    Route::put('users/{user}/update', [UserController::class,'update'])->name('update.users');
-    Route::delete('users/{user}/destroy', [UserController::class,'destroy'])->name('destroy.users');
+    Route::get('users', [UserController::class,'index'])->name('users')->middleware(['role:admin']);
+    Route::get('users/create', [UserController::class,'create'])->name('create.users')->middleware(['role:admin']);
+    Route::post('users/store', [UserController::class,'store'])->name('store.users')->middleware(['role:admin']);
+    Route::get('users/{user}/edit', [UserController::class,'edit'])->name('edit.users')->middleware(['role:admin']);
+    Route::put('users/{user}/update', [UserController::class,'update'])->name('update.users')->middleware(['role:admin']);
+    Route::delete('users/{user}/destroy', [UserController::class,'destroy'])->name('destroy.users')->middleware(['role:admin']);
 
     Route::get('users/softDelete', [UserController::class,'softDelete'])->name('softDeletes.users');
     Route::get('users/{id}/restore', [UserController::class, 'restoreData'])->name('restore.users');
