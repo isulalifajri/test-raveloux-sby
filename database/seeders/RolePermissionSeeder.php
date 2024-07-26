@@ -15,20 +15,43 @@ class RolePermissionSeeder extends Seeder
      */
     public function run()
     {
-        Permission::create(['name' => 'create']);
-        Permission::create(['name' => 'store']);
-        Permission::create(['name' => 'edit']);
-        Permission::create(['name' => 'update']);
-        Permission::create(['name' => 'detail']);
-        Permission::create(['name' => 'delete']);
+        // permission users
+        Permission::create(['name' => 'create.users']);
+        Permission::create(['name' => 'store.users']);
+        Permission::create(['name' => 'edit.users']);
+        Permission::create(['name' => 'update.users']);
+        Permission::create(['name' => 'destroy.users']);
+
+        // permission clients
+        $clients = ['create.clients', 'store.clients', 'edit.clients', 'update.clients', 'destroy.clients'];
+
+        foreach ($clients as $client) {
+            Permission::create(['name' => $client]);
+        }
+
+        // permission projects
+        $projects = ['create.projects', 'store.projects', 'edit.projects', 'update.projects', 'destroy.projects'];
+        foreach ($projects as $project) {
+            Permission::create(['name' => $project]);
+        }
+
+        // permission tasks
+        $tasks = ['create.tasks', 'store.tasks', 'edit.tasks', 'update.tasks','detail.tasks', 'destroy.tasks'];
+        foreach ($tasks as $task) {
+            Permission::create(['name' => $task]);
+        }
+
 
         Role::create(['name' => 'admin']);
         Role::create(['name' => 'user']);
         $roleAdmin = Role::findByName('admin');
-        $roleAdmin->givePermissionTo(['create','store','edit','update','detail','delete']);
+        $roleAdmin->givePermissionTo(['create.users','store.users','edit.users','update.users','destroy.users']);
+        $roleAdmin->givePermissionTo(['create.clients','store.clients','edit.clients','update.clients','destroy.clients']);
+        $roleAdmin->givePermissionTo(['create.projects','store.projects','edit.clients','update.clients','destroy.clients']);
+        $roleAdmin->givePermissionTo(['create.tasks','store.tasks','edit.clients','update.clients','detail.tasks','destroy.tasks']);
 
         $roleUser = Role::findByName('user');
-        $roleUser->givePermissionTo(['detail']);
+        $roleUser->givePermissionTo(['detail.tasks']);
 
     }
 }
