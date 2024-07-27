@@ -12,18 +12,28 @@ class ProfileController extends Controller
         return view('pages.profiles.profile', compact('data'));
     }
 
-    public function updateprofile(Request $request, $id){
+    public function updateprofile(Request $request, User $user){
 
         $validatedData = $request->validate([
             'first_name' => ['required', 'string', 'max:250'],
             'last_name' => ['nullable'],
-            'email' => ['required', 'email', 'max:250', 'unique:users,email,'.$id],
+            'email' => ['required', 'email', 'max:250', 'unique:users,email,'.$user->id],
             'phone_number' => ['required','numeric'],
             'address' => ['required'],
         ]);
 
-        $user = User::find($id);
         $user->update($validatedData);
         return back()->with('success', 'Data Profile Berhasil di update');
+    }
+
+    public function uploadImage(Request $request, User $user){
+        if ($user->hasMedia('images/profiles')) {
+            // Remove the old media
+            $user->clearMediaCollection('images/profiles');
+        }
+        // Add the new media
+        $user->addMedia($request->image)->toMediaCollection('images/profiles');
+
+        return back()->with('success', 'Upload Images Successfully');
     }
 }

@@ -7,16 +7,35 @@
       <!-- Profile Image -->
       <div class="card card-primary card-outline mb-3">
         <div class="card-body box-profile">
-          <div class="text-center">
-            <img src="{{ asset('no-image.jpg') }}"  class="profile-user-img img-fluid img-circle" style="height: 80px; width:80px" alt="default">
-          </div>
+          @if($data->hasMedia('images/profiles'))
+              <div class="text-center">
+                  <img src="{{ $data->getFirstMediaUrl('images/profiles') }}" class="img-preview img-fluid img-circle" alt="profile">
+              </div>
+          @else
+              <div class="text-center">
+                  <img src="{{ asset('no-image.jpg') }}" class="img-preview img-fluid img-circle" alt="default">
+              </div>
+          @endif
 
           <h3 class="text-center p-0">{{ auth()->user()->first_name }}</h3>
           <p class="text-muted small text-center">{{ auth()->user()->getRoleNames()->first() }}</p>
         </div>
-        <!-- /.card-body -->
       </div>
-      <!-- /.card -->
+
+      <form action="{{ route('profiles.uploadImage', $data->id) }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="card">
+          <div class="m-2">
+            <input type="file" name="image" class="form-control @error('image') is-invalid @enderror" id="images-prv" onchange="previewImage()">
+            @error('image')
+                <div class="invalid-feedback d-block">
+                    {{ $message }}
+                </div>   
+            @enderror
+          </div>
+          <button type="submit" class="btn btn-primary m-2">Submit</button>
+        </div>
+      </form>
 
     </div>
     <!-- /.col -->
@@ -116,3 +135,18 @@
   </div>
   <!-- /.row -->
 @endsection
+
+@push('js')
+
+    <script>
+        function previewImage(){
+        const image =  document.querySelector('#images-prv');
+        const imgPreview = document.querySelector('.img-preview');
+
+        imgPreview.style.display = 'block';
+
+        const blob = URL.createObjectURL(image.files[0]);
+            imgPreview.src = blob;
+        }
+    </script>
+@endpush

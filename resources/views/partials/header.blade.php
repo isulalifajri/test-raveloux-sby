@@ -58,7 +58,12 @@
                 </a>
 
                 <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                    <img src="{{ asset('asset/img/avatars/avatar.jpg') }}" class="avatar img-fluid rounded me-1" alt="{{ auth()->user()->first_name }}" /> <span class="text-dark">{{ auth()->user()->first_name }}</span>
+                    @if(auth()->user()->hasMedia('images/profiles'))
+                        <img src="{{ auth()->user()->getFirstMediaUrl('images/profiles') }}" class="avatar img-fluid rounded me-1" alt="{{ auth()->user()->first_name }}" />
+                    @else
+                        <img src="{{ asset('no-image.jpg') }}" class="avatar img-fluid rounded me-1" alt="default" />
+                    @endif
+                    <span class="text-dark">{{ auth()->user()->first_name }}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end">
                     <a class="dropdown-item" href="{{ route('profiles') }}"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
