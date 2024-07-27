@@ -19,15 +19,15 @@
                     </li>
                     <li class="list-group-item d-flex row">
                         <dt class="col-sm-2">User Assigned :</dt>
-                        <dd class="col-sm-9">{{ $task->user->first_name }}</dd>
+                        <dd class="col-sm-9">{!! optional($task->user)->first_name ?? '<span class="text-danger">User tidak ada / User dihapus</span>' !!}</dd>
                     </li>
                     <li class="list-group-item d-flex row">
                         <dt class="col-sm-2">Client Assigned :</dt>
-                        <dd class="col-sm-9">{{ $task->client->contact_name }}</dd>
+                        <dd class="col-sm-9">{!! optional($task->client)->contact_name ?? '<span class="text-danger">Client tidak ada / Client dihapus</span>' !!}</dd>
                     </li>
                     <li class="list-group-item d-flex row">
                         <dt class="col-sm-2">Project :</dt>
-                        <dd class="col-sm-9">{{ $task->project->title }}</dd>
+                        <dd class="col-sm-9">{!! optional($item->project)->title ?? '<span class="text-danger">Project tidak ada / Project dihapus</span>' !!}</dd>
                     </li>
                     <li class="list-group-item d-flex row">
                         <dt class="col-sm-2">Status :</dt>

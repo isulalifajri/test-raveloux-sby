@@ -24,9 +24,9 @@
                             <tr>
                                 <td>{{ $tasks->firstItem() + $paginate }}</td>
                                 <td>{{ $item->title }}</td>
-                                <td>{{ $item->user->first_name }}</td>
-                                <td>{{ $item->client->contact_name }}</td>
-                                <td>{{ $item->project->title }}</td>
+                                <td>{!! optional($item->user)->first_name ?? '<span class="text-danger">User tidak ada / User dihapus</span>' !!}</td>
+                                <td>{!! optional($item->client)->contact_name ?? '<span class="text-danger">Client tidak ada / Client dihapus</span>' !!}</td>
+                                <td>{!! optional($item->project)->title ?? '<span class="text-danger">Project tidak ada / Project dihapus</span>' !!}</td>
                                 <td>{{ date('d M Y - H:i:s', strtotime($item->deadline)) }}</span></td>
                                 <td><span class="badge bg-primary">{{ $item->status }}</span></td>
                                 <td>
