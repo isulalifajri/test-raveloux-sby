@@ -29,6 +29,8 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-sm-4">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row">
@@ -69,6 +71,8 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-sm-4">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row">
@@ -85,6 +89,27 @@
                                     <h1 class="mt-1 mb-3">{{ $tasks }}</h1>
                                     <div class="mb-0">
                                         <span class="text-muted">Total Jumlah Tasks</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col mt-0">
+                                            <h5 class="card-title">Projects In Progresss</h5>
+                                        </div>
+
+                                        <div class="col-auto">
+                                            <div class="stat text-primary">
+                                                <i class="align-middle" data-feather="file"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h1 class="mt-1 mb-3">{{ $projectInProgress }}</h1>
+                                    <div class="mb-0">
+                                        <span class="text-muted">Total Jumlah Projects InProgress</span>
                                     </div>
                                 </div>
                             </div>
@@ -141,8 +166,8 @@
                                         <td>{{ $item->created_at }}</td>
                                         <td>{{ $item->deadline }}</td>
                                         <td><span class="badge bg-success">{{ $item->status }}</span></td>
-                                        <td>{{ $item->user->first_name }}</td>
-                                        <td>{{ $item->client->contact_name }}</td>
+                                        <td>{!! optional($item->user)->first_name ?? '<span class="text-danger">User tidak ada /User dihapus</span>' !!}</td>
+                                        <td>{!! optional($item->client)->contact_name ?? '<span class="text-danger">Client tidak ada / Client dihapus</span>' !!}</td>
                                     </tr>
                                 </tbody>
                             @endforeach
