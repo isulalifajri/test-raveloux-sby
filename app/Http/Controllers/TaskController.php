@@ -14,7 +14,10 @@ class TaskController extends Controller
 {
     public function index(){
         try {
-            $tasks = Task::with(['user:id,first_name','client:id,contact_name'])->orderBy('created_at','DESC')->paginate(10);
+            $tasks = Task::with(['user:id,first_name', 'client:id,contact_name'])
+            ->where('status', '!=', 'done') // Pastikan hanya mengambil task yang belum selesai
+            ->orderBy('deadline', 'ASC') // Urutkan berdasarkan deadline dari yang terdekat
+            ->paginate(10);
             return view('pages.tasks.tasks',compact(
                 'tasks'
             ));

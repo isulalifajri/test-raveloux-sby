@@ -22,7 +22,7 @@ class TaskFactory extends Factory
             'user_id' => User::pluck('id')->random(),
             'client_id' => Client::pluck('id')->random(),
             'project_id' => Project::pluck('id')->random(),
-            'deadline' => $this->faker->dateTime(),
+            'deadline' => $this->faker->date(),
             'status' => $this->faker->randomElement(['open', 'close','done','in progress']),
         ];
     }

@@ -11,25 +11,14 @@ class ProjectController extends Controller
 {
     public function index(Request $request){
         try {
-            // $title = $request->query('title');
-            // $status = $request->query('status');
-            // if ($title && $status) {
-            //     $projects = Project::with(['user:id,first_name','client:id,contact_name'])
-            //     ->where('title', $title)
-            //     ->where('status', $status)
-            //     ->orderBy('created_at', 'DESC')
-            //     ->paginate(10);
-            // } else {
-            //     $projects = Project::with(['user:id,first_name','client:id,contact_name'])->orderBy('created_at','DESC')->paginate(10);
-            // }
-            $title = $request->query('title');
+            $search = $request->query('search');
             $status = $request->query('status');
 
             $query = Project::with(['user:id,first_name', 'client:id,contact_name'])
                 ->orderBy('created_at', 'DESC');
 
-            if ($title) {
-                $query->where('title', $title);
+            if ($search) {
+                $query->where('title', 'LIKE', "%{$search}%"); // Ubah ke LIKE untuk pencarian yang lebih fleksibel
             }
 
             if ($status) {

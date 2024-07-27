@@ -11,14 +11,7 @@
             <form action="">
                 <div class="d-flex flex-wrap gap-1 my-2">
                     <div class="col-md-4 col-12">
-                        <select class="form-select w-100" id="title" name="title">
-                            <option value="">Select Title</option>
-                            @foreach ($titles as $tl)
-                                <option value="{{ $tl }}" {{ request('title') == $tl ? 'selected' : '' }}>
-                                    {{ $tl }}
-                                </option>
-                            @endforeach
-                        </select>
+                        <input type="search" class="form-control" placeholder="Search.." name="search" value="{{ request('search') }}">
                     </div>
                     <div class="col-md-4 col-12">
                         @php
@@ -57,7 +50,7 @@
                                 <td>{{ $item->title }}</td>
                                 <td>{!! optional($item->user)->first_name ?? '<span class="text-danger">User tidak ada / User dihapus</span>' !!}</td>
                                 <td>{!! optional($item->client)->contact_name ?? '<span class="text-danger">Client tidak ada / Client dihapus</span>' !!}</td>
-                                <td>{{ date('d M Y - H:i:s', strtotime($item->deadline)) }}</span></td>
+                                <td>{{ date('d M Y', strtotime($item->deadline)) }}</span></td>
                                 <td><span class="badge bg-primary">{{ $item->status }}</span></td>
                                 <td>
                                     <div class="d-flex gap-1">

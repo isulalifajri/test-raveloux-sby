@@ -10,6 +10,15 @@
                     <a href="{{ route('softDeletes.tasks') }}" class="btn btn-warning">softDeletes</a>
                 </div>
             @endcan
+            <form action="">
+                <div class="d-flex flex-wrap gap-1 my-2">
+                    <div class="col-md-4 col-12">
+                        <input type="date" class="form-control" name="deadline" id="deadline" value="{{ request('deadline') }}">
+                    </div>
+                    <button class="btn btn-secondary" type="submit">Filter Data</button>
+                    <a href="{{ route('tasks') }}" class="btn btn-secondary"><i data-feather="refresh-cw"></i></a>
+                </div>
+            </form>
             <div class="table-responsive">
                 <table class="table table-hover my-0">
                     <thead>
@@ -32,7 +41,7 @@
                                 <td>{!! optional($item->user)->first_name ?? '<span class="text-danger">User tidak ada / User dihapus</span>' !!}</td>
                                 <td>{!! optional($item->client)->contact_name ?? '<span class="text-danger">Client tidak ada / Client dihapus</span>' !!}</td>
                                 <td>{!! optional($item->project)->title ?? '<span class="text-danger">Project tidak ada / Project dihapus</span>' !!}</td>
-                                <td>{{ date('d M Y - H:i:s', strtotime($item->deadline)) }}</span></td>
+                                <td>{{ date('d M Y', strtotime($item->deadline)) }}</span></td>
                                 <td><span class="badge bg-primary">{{ $item->status }}</span></td>
                                 <td>
                                     <div class="d-flex gap-1">

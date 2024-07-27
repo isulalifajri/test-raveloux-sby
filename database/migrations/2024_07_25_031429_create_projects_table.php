@@ -19,7 +19,7 @@ class CreateProjectsTable extends Migration
             $table->text('description');
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('SET NULL')->onUpdate('CASCADE');
             $table->foreignId('client_id')->nullable()->constrained()->onDelete('SET NULL')->onUpdate('CASCADE');
-            $table->dateTime('deadline');
+            $table->date('deadline');
             $table->string('status')->nullable();
             $table->timestamps();
             $table->softDeletes();

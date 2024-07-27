@@ -20,7 +20,7 @@ class CreateTasksTable extends Migration
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('SET NULL')->onUpdate('CASCADE');
             $table->foreignId('client_id')->nullable()->constrained()->onDelete('SET NULL')->onUpdate('CASCADE');
             $table->foreignId('project_id')->nullable()->constrained()->onDelete('SET NULL')->onUpdate('CASCADE');
-            $table->dateTime('deadline');
+            $table->date('deadline');
             $table->string('status')->nullable();
             $table->timestamps();
             $table->softDeletes();
