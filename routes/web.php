@@ -10,8 +10,10 @@ use Illuminate\Support\Facades\Password;
 use App\Http\Controllers\LoginController;
 use Illuminate\Auth\Events\PasswordReset;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Notifications\DatabaseNotification;
 
 /*
@@ -30,18 +32,21 @@ Route::get('/', function () {
 })->name('home');
 
 
-Route::get('/dashboard', function () {
-    $notifications = DatabaseNotification::latest()->take(5)->get();
-    $unreadCount = DatabaseNotification::whereNull('read_at')->count();
-    return view('dashboard',[
-        'unreadCount' => $unreadCount,
-        'notifications' => $notifications,
-    ]);
-})->name('dashboard')->middleware('auth');
+// Route::get('/dashboard', function () {
+//     $notifications = DatabaseNotification::latest()->take(5)->get();
+//     $unreadCount = DatabaseNotification::whereNull('read_at')->count();
+//     return view('dashboard',[
+//         'unreadCount' => $unreadCount,
+//         'notifications' => $notifications,
+//     ]);
+// })->name('dashboard')->middleware('auth');
 
 Route::get('/login', [LoginController::class,'index'])->name('login');
 
 Route::group(['middleware' => ['auth','notification']], function () {
+    // dashboard
+    Route::get('dashboard',[DashboardController::class, 'index'])->name('dashboard');
+
     // users
     Route::get('users', [UserController::class,'index'])->name('users')->middleware(['role:admin']);
     Route::get('users/create', [UserController::class,'create'])->name('create.users')->middleware(['role:admin']);
@@ -110,6 +115,7 @@ Route::group(['middleware' => ['auth','notification']], function () {
     })->middleware(['role_or_permission:detail|admin']);
 
     // profile
+    Route::get('profiles', [ProfileController::class,'index'])->name('profiles');
     
 
     // Reset Password
@@ -120,13 +126,18 @@ Route::group(['middleware' => ['auth','notification']], function () {
     Route::post('/password/forgot-password', function (Request $request) {
         $request->validate(['email' => ['required','email']]);
      
-        $status = Password::sendResetLink(
-            $request->only('email')
-        );
-     
-        return $status === Password::RESET_LINK_SENT
-                    ? back()->with(['success' => __($status)])
-                    : back()->withErrors(['email' => __($status)]);
+        if ((auth()->user()->email == $request->email || auth()->user()->hasRole('admin'))) {
+            $status = Password::sendResetLink(
+                $request->only('email')
+            );
+    
+            return $status === Password::RESET_LINK_SENT
+                        ? back()->with(['success' => __($status)])
+                        : back()->withErrors(['email' => __($status)]);
+        }else{
+            return back()->with('success-danger', 'User Unauthorize');
+        }
+
     })->name('password.email');
 
     Route::get('/password/reset-password/{token}', function ($token) {

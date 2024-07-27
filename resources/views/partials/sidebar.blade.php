@@ -40,7 +40,7 @@
             </li>
 
             <li class="sidebar-item {{ Request::is('profiles*') ? 'active' : '' }}">
-                <a class="sidebar-link" href="#0">
+                <a class="sidebar-link" href="{{ route('profiles') }}">
                 <i class="align-middle" data-feather="user-check"></i> <span class="align-middle">Profile</span></a>
             </li> 
             <li class="sidebar-item {{ Request::is('password*') ? 'active' : '' }}">
