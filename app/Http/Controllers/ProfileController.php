@@ -27,6 +27,7 @@ class ProfileController extends Controller
     }
 
     public function uploadImage(Request $request, User $user){
+
         if ($user->hasMedia('images/profiles')) {
             // Remove the old media
             $user->clearMediaCollection('images/profiles');

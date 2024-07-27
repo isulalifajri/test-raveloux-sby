@@ -13,6 +13,7 @@
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>Image</th>
                             <th>Title</th>
                             <th>Assigned User</th>
                             <th>Assigned Client</th>
@@ -25,6 +26,7 @@
                         @foreach ($projects as $paginate => $item)
                             <tr>
                                 <td>{{ $projects->firstItem() + $paginate }}</td>
+                                <td><img src="{{ $item->products_url }}" alt="{{ $item->title }}" width="70px"></td>
                                 <td>{{ $item->title }}</td>
                                 <td>{{ $item->user->first_name }}</td>
                                 <td>{{ $item->client->contact_name }}</td>

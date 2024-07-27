@@ -45,7 +45,14 @@ class ProjectController extends Controller
         try {
      
             $validatedData = $request->validate($rules);
-            Project::create($validatedData);
+
+            $project = Project::create($validatedData);
+
+            // Jika ada gambar dalam request
+            if ($request->hasFile('image')) {
+                // Tambahkan media baru ke koleksi 'images/projects'
+                $project->addMedia($request->file('image'))->toMediaCollection('images/projects');
+            }
     
             return redirect()->route('projects')->with('success', 'Data Berhasil ditambahkan');
         } catch (\Exception $th) {
@@ -75,6 +82,15 @@ class ProjectController extends Controller
         ]);
         
         try {
+            if ($request->hasFile('image')) {
+                // Hapus media lama jika ada
+                if ($project->hasMedia('images/projects')) {
+                    $project->clearMediaCollection('images/projects');
+                }
+                // Tambahkan media baru ke koleksi 'images/profiles'
+                $project->addMedia($request->file('image'))->toMediaCollection('images/projects');
+            }
+
             $project->update($validatedData);
     
             return redirect()->route('projects')->with('success', 'Data Berhasil di Edit');
@@ -116,7 +132,11 @@ class ProjectController extends Controller
     public function forcedelete($id)
     {
        try {
-           Project::onlyTrashed()->find($id)->forceDelete();
+           $project = Project::onlyTrashed()->find($id);
+            if ($project->hasMedia('images/projects')) {
+                 $project->clearMediaCollection('images/projects'); //hapus image
+            }
+           $project->forceDelete();
            return redirect()->route('softDeletes.projects')->with('success-danger', "Data Successfully Deleted Permanently");
        } catch (\Exception $th) {
           return back()->with('success-danger', 'Ada yang Error'. $th->getMessage());

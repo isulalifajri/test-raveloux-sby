@@ -7,7 +7,7 @@
             <div class="col-md-12">
                 <div class="card mb-4">
                   <h5 class="card-header">Edit Form</h5>
-                  <form method="POST" action="{{ route('update.projects', $project->id) }}">
+                  <form method="POST" action="{{ route('update.projects', $project->id) }}" enctype="multipart/form-data">
                     @method('PUT')
                     @csrf
                       <div class="card-body demo-vertical-spacing demo-only-element">

@@ -1,3 +1,32 @@
+@if(request()->segment(count(request()->segments())) == 'edit') 
+    <div class="mt-1">
+        @if($project->hasMedia('images/projects'))
+            @php
+                $mediaItem = $project->getFirstMedia('images/projects');
+            @endphp
+            <div class="col-md-3">
+                <img src="{{ $mediaItem->getUrl() }}" 
+                class="img-preview img-fluid mb-3 d-block" 
+                alt="{{ $mediaItem->name }}" 
+                id="myImg">
+            </div>
+        @else
+            <div class="col-md-3">
+                <img src="{{ asset('no-image.jpg') }}" class="img-preview img-fluid img-circle" alt="default">
+            </div>
+        @endif
+        <div class="input-group input-group-merge">
+            <input
+            type="file"
+            accept="image/png, image/gif, image/jpeg, image/jpg, image/webp, image/avif"
+            name="image"
+            class="form-control @error('image') is-invalid @enderror"
+            id="images-prv" onchange="previewImage()" />
+        </div>
+        <span style="font-size: 11px">*Only uploading image is allowed</span>
+    </div>   
+@endif
+
 <div class="mt-1">
     <label class="form-label" for="title">Title</label>
     <div class="input-group input-group-merge">
@@ -101,3 +130,34 @@
             </div>
         @enderror
 </div>
+
+@if(request()->segment(count(request()->segments())) == 'create')    
+    <div class="mt-1">
+        <label class="form-label" for="image-prv">Image</label>
+        <img class="img-preview img-fluid mb-3 col-sm-2" alt="">
+        <div class="input-group input-group-merge">
+            <input
+            type="file"
+            accept="image/png, image/gif, image/jpeg, image/jpg, image/webp, image/avif"
+            name="image"
+            class="form-control @error('image') is-invalid @enderror"
+            id="images-prv" onchange="previewImage()" required />
+        </div>
+        <span style="font-size: 11px">*Only uploading image is allowed</span>
+    </div>
+@endif
+
+@push('js')
+
+    <script>
+        function previewImage(){
+        const image =  document.querySelector('#images-prv');
+        const imgPreview = document.querySelector('.img-preview');
+
+        imgPreview.style.display = 'block';
+
+        const blob = URL.createObjectURL(image.files[0]);
+            imgPreview.src = blob;
+        }
+    </script>
+@endpush

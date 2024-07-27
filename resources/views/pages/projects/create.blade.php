@@ -7,7 +7,7 @@
             <div class="col-md-12">
                 <div class="card mb-4">
                   <h5 class="card-header">Create Form</h5>
-                  <form method="POST" action="{{ route('store.projects') }}">
+                  <form method="POST" action="{{ route('store.projects') }}" enctype="multipart/form-data">
                     @method('POST')
                     @csrf
                       <div class="card-body demo-vertical-spacing demo-only-element">
