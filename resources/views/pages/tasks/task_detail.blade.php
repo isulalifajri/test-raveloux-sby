@@ -27,7 +27,7 @@
                     </li>
                     <li class="list-group-item d-flex row">
                         <dt class="col-sm-2">Project :</dt>
-                        <dd class="col-sm-9">{!! optional($item->project)->title ?? '<span class="text-danger">Project tidak ada / Project dihapus</span>' !!}</dd>
+                        <dd class="col-sm-9">{!! optional($task->project)->title ?? '<span class="text-danger">Project tidak ada / Project dihapus</span>' !!}</dd>
                     </li>
                     <li class="list-group-item d-flex row">
                         <dt class="col-sm-2">Status :</dt>
