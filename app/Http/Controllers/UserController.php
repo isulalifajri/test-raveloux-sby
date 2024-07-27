@@ -46,7 +46,8 @@ class UserController extends Controller
     
             $user = User::create($validatedData);
 
-            $user->givePermissionTo('detail');
+            $user->givePermissionTo('detail.tasks');
+            $user->assignRole('user');
     
             return redirect()->route('users')->with('success', 'Data Berhasil ditambahkan');
         } catch (\Exception $th) {
