@@ -17,13 +17,17 @@ class DashboardController extends Controller
         $taskCount = Task::all()->count();
         $projects = Project::with(['user:id,first_name','client:id,contact_name'])->orderBy('created_at','DESC')->paginate(7);
         $projectInProgress = Project::where('status','in progress')->count();
+        $overdueProjects = Project::where('status', '!=', 'done')
+        ->where('deadline', '<', now())
+        ->count();
         return view('dashboard',[
             'users' => $userCount,
             'clients' => $clientCount,
             'projectsCount' => $projectCount,
             'tasks' => $taskCount,
             'projects' => $projects,
-            'projectInProgress' => $projectInProgress
+            'projectInProgress' => $projectInProgress,
+            'overdueProjects' => $overdueProjects,
         ]);
     }
 }

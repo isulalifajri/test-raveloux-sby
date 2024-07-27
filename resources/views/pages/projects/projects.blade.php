@@ -8,6 +8,33 @@
                 <a href="{{ route('create.projects') }}" class="btn btn-primary">Tambah Data</a>
                 <a href="{{ route('softDeletes.projects') }}" class="btn btn-warning">softDeletes</a>
             </div>
+            <form action="">
+                <div class="d-flex flex-wrap gap-1 my-2">
+                    <div class="col-md-4 col-12">
+                        <select class="form-select w-100" id="title" name="title">
+                            <option value="">Select Title</option>
+                            @foreach ($titles as $tl)
+                                <option value="{{ $tl }}" {{ request('title') == $tl ? 'selected' : '' }}>
+                                    {{ $tl }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        @php
+                            $status = ['open', 'close','done','in progress'];  
+                        @endphp
+                        <select class="form-select w-100" id="status" name="status">
+                            <option value="">Select Status</option>
+                            @foreach ($status as $st)
+                                <option value="{{ $st }}" {{ request('status') == $st ? 'selected' : '' }}>{{ $st }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <button class="btn btn-secondary" type="submit">Filter Data</button>
+                    <a href="{{ route('projects') }}" class="btn btn-secondary"><i data-feather="refresh-cw"></i></a>
+                </div>
+            </form>
             <div class="table-responsive">
                 <table class="table table-hover my-0">
                     <thead>
@@ -23,7 +50,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($projects as $paginate => $item)
+                        @forelse ($projects as $paginate => $item)
                             <tr>
                                 <td>{{ $projects->firstItem() + $paginate }}</td>
                                 <td><img src="{{ $item->products_url }}" alt="{{ $item->title }}" width="70px"></td>
@@ -43,7 +70,11 @@
                                     </div>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="9"><h3 class="text-center">Tidak ada data yang tersedia</h3></td>
+                            </tr>
+                        @endforelse
                         
                     </tbody>
                 </table>

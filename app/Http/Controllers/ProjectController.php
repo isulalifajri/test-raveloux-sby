@@ -9,11 +9,39 @@ use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
         try {
-            $projects = Project::with(['user:id,first_name','client:id,contact_name'])->orderBy('created_at','DESC')->paginate(10);
+            // $title = $request->query('title');
+            // $status = $request->query('status');
+            // if ($title && $status) {
+            //     $projects = Project::with(['user:id,first_name','client:id,contact_name'])
+            //     ->where('title', $title)
+            //     ->where('status', $status)
+            //     ->orderBy('created_at', 'DESC')
+            //     ->paginate(10);
+            // } else {
+            //     $projects = Project::with(['user:id,first_name','client:id,contact_name'])->orderBy('created_at','DESC')->paginate(10);
+            // }
+            $title = $request->query('title');
+            $status = $request->query('status');
+
+            $query = Project::with(['user:id,first_name', 'client:id,contact_name'])
+                ->orderBy('created_at', 'DESC');
+
+            if ($title) {
+                $query->where('title', $title);
+            }
+
+            if ($status) {
+                $query->where('status', $status);
+            }
+
+            $projects = $query->paginate(10);
+            $titles = Project::select('title')
+            ->distinct()
+            ->pluck('title');
             return view('pages.projects.projects',compact(
-                'projects'
+                'projects','titles'
             ));
         } catch (\Exception $th) {
             return back()->with('success-danger', 'Ada yang Error'. $th->getMessage());
