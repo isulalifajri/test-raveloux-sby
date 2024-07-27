@@ -116,6 +116,7 @@ Route::group(['middleware' => ['auth','notification']], function () {
 
     // profile
     Route::get('profiles', [ProfileController::class,'index'])->name('profiles');
+    Route::put('profiles/update/{id}', [ProfileController::class, 'updateprofile'])->name('profiles.update');
     
 
     // Reset Password
