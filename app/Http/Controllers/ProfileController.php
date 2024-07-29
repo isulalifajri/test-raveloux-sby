@@ -28,6 +28,10 @@ class ProfileController extends Controller
 
     public function uploadImage(Request $request, User $user){
 
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,avif,webp|max:2048',
+        ]);
+
         if ($user->hasMedia('images/profiles')) {
             // Remove the old media
             $user->clearMediaCollection('images/profiles');

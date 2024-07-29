@@ -26,6 +26,11 @@
         @csrf
         <div class="card">
           <div class="m-2">
+            @if($data->hasMedia('images/projects'))
+                <!-- Display existing image name and format -->
+                Name: {{ $data->getFirstMedia('images/projects')->file_name }}<br>
+                Format: {{ $data->getFirstMedia('images/projects')->mime_type }}
+            @endif
             <input type="file" name="image" class="form-control @error('image') is-invalid @enderror" id="images-prv" onchange="previewImage()">
             @error('image')
                 <div class="invalid-feedback d-block">
