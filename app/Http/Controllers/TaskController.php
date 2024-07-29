@@ -12,12 +12,16 @@ use Illuminate\Support\Facades\Notification;
 
 class TaskController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
         try {
-            $tasks = Task::with(['user:id,first_name', 'client:id,contact_name'])
+            $deadline = $request->query('deadline');
+            $query = Task::with(['user:id,first_name', 'client:id,contact_name'])
             ->where('status', '!=', 'done') // Pastikan hanya mengambil task yang belum selesai
-            ->orderBy('deadline', 'ASC') // Urutkan berdasarkan deadline dari yang terdekat
-            ->paginate(10);
+            ->orderBy('deadline', 'ASC'); // Urutkan berdasarkan deadline dari yang terdekat
+            if ($deadline) {
+                $query->where('deadline', $deadline);
+            }
+            $tasks = $query->paginate(10);
             return view('pages.tasks.tasks',compact(
                 'tasks'
             ));

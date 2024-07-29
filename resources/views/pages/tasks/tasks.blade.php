@@ -19,6 +19,7 @@
                     <a href="{{ route('tasks') }}" class="btn btn-secondary"><i data-feather="refresh-cw"></i></a>
                 </div>
             </form>
+            <p>Noted : Warna <span class="text-danger">merah</span> artinya mendekati h-3 deadline, Warna <span class="text-warning">Kuning</span>  artinya melewati deadline.</p>
             <div class="table-responsive">
                 <table class="table table-hover my-0">
                     <thead>
@@ -34,8 +35,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($tasks as $paginate => $item)
-                            <tr>
+                        @forelse ($tasks as $paginate => $item)
+                        @php
+                            $now = strtotime(date('Y-m-d')); // Mendapatkan tanggal saat ini tanpa waktu
+                            $deadline = strtotime($item->deadline); // Mendapatkan timestamp batas waktu
+                            $daysLeft = ($deadline - $now) / 86400; // 86400 detik dalam sehari
+                        @endphp
+                            <tr class="{{ $daysLeft < 0 ? 'bg-warning text-dark' : ($daysLeft <= 3 ? 'bg-danger text-white' : '') }}">
                                 <td>{{ $tasks->firstItem() + $paginate }}</td>
                                 <td>{{ $item->title }}</td>
                                 <td>{!! optional($item->user)->first_name ?? '<span class="text-danger">User tidak ada / User dihapus</span>' !!}</td>
@@ -57,7 +63,11 @@
                                     </div>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="8"><h3 class="text-center">Tidak ada data yang tersedia</h3></td>
+                            </tr>
+                        @endforelse
                         
                     </tbody>
                 </table>
