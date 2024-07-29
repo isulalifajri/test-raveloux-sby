@@ -23,7 +23,7 @@ class TaskController extends Controller
             ->orderBy('deadline', 'ASC'); // Urutkan berdasarkan deadline dari yang terdekat
             
             if (!$user->hasRole('admin')) {
-                // Jika bukan admin, hanya ambil proyek yang ditugaskan ke pengguna yang terkait
+                // Jika bukan admin, hanya ambil tasks yang ditugaskan ke pengguna yang terkait
                 $query->where('user_id', $user->id);
             };
 

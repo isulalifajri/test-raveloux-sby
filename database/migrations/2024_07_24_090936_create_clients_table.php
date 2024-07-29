@@ -15,6 +15,7 @@ class CreateClientsTable extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('SET NULL')->onUpdate('CASCADE');
             $table->string('contact_name');
             $table->string('contact_email');
             $table->string('contact_phone_number');

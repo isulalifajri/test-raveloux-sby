@@ -60,16 +60,16 @@ Route::group(['middleware' => ['auth','notification']], function () {
     Route::delete('users/{id}/forcedelete/', [UserController::class,'forcedelete'])->name('forcedelete.users')->middleware('role:admin');
 
     // clients
-    Route::get('clients', [ClientController::class,'index'])->name('clients')->middleware('role:admin');
-    Route::get('clients/create', [ClientController::class,'create'])->name('create.clients')->middleware('role:admin');
-    Route::post('clients/store', [ClientController::class,'store'])->name('store.clients')->middleware('role:admin');
-    Route::get('clients/{client}/edit', [ClientController::class,'edit'])->name('edit.clients')->middleware('role:admin');
-    Route::put('clients/{client}/update', [ClientController::class,'update'])->name('update.clients')->middleware('role:admin');
-    Route::delete('clients/{client}/destroy', [ClientController::class,'destroy'])->name('destroy.clients')->middleware('role:admin');
+    Route::get('clients', [ClientController::class,'index'])->name('clients')->middleware('role:admin|user');
+    Route::get('clients/create', [ClientController::class,'create'])->name('create.clients')->middleware('role:admin|user');
+    Route::post('clients/store', [ClientController::class,'store'])->name('store.clients')->middleware('role:admin|user');
+    Route::get('clients/{client}/edit', [ClientController::class,'edit'])->name('edit.clients')->middleware('role:admin|user');
+    Route::put('clients/{client}/update', [ClientController::class,'update'])->name('update.clients')->middleware('role:admin|user');
+    Route::delete('clients/{client}/destroy', [ClientController::class,'destroy'])->name('destroy.clients')->middleware('role:admin|user');
 
-    Route::get('clients/softDelete', [ClientController::class,'softDelete'])->name('softDeletes.clients')->middleware('role:admin');
-    Route::get('clients/{id}/restore', [ClientController::class, 'restoreData'])->name('restore.clients')->middleware('role:admin');
-    Route::delete('clients/{id}/forcedelete/', [ClientController::class,'forcedelete'])->name('forcedelete.clients')->middleware('role:admin');
+    Route::get('clients/softDelete', [ClientController::class,'softDelete'])->name('softDeletes.clients')->middleware('role:admin|user');
+    Route::get('clients/{id}/restore', [ClientController::class, 'restoreData'])->name('restore.clients')->middleware('role:admin|user');
+    Route::delete('clients/{id}/forcedelete/', [ClientController::class,'forcedelete'])->name('forcedelete.clients')->middleware('role:admin|user');
 
     // projects
     Route::get('projects', [ProjectController::class,'index'])->name('projects')->middleware('role:admin|user');

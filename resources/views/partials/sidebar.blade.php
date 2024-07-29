@@ -20,11 +20,11 @@
                     <a class="sidebar-link" href="{{ route('users') }}">
                     <i class="align-middle" data-feather="user"></i> <span class="align-middle">Users</span></a>
                 </li>
+            @endcan
                 <li class="sidebar-item {{ Request::is('clients*') ? 'active' : '' }}">
                     <a class="sidebar-link" href="{{ route('clients') }}">
                     <i class="align-middle" data-feather="users"></i> <span class="align-middle">Clients</span></a>
                 </li>
-                @endcan
                 <li class="sidebar-item {{ Request::is('projects*') ? 'active' : '' }}">
                     <a class="sidebar-link" href="{{ route('projects') }}">
                     <i class="align-middle" data-feather="file"></i> <span class="align-middle">Projects</span></a>

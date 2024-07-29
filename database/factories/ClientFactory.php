@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ClientFactory extends Factory
@@ -14,6 +15,7 @@ class ClientFactory extends Factory
     public function definition()
     {
         return [
+            'user_id' => User::pluck('id')->random(),
             'contact_name' => $this->faker->name(),
             'contact_email' => $this->faker->unique()->safeEmail(),
             'contact_phone_number' => $this->faker->phoneNumber(),

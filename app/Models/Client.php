@@ -11,4 +11,8 @@ class Client extends Model
     use HasFactory, SoftDeletes;
 
     protected $guarded = ['id'];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

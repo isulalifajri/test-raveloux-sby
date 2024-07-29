@@ -11,7 +11,13 @@ class ClientController extends Controller
 {
     public function index(){
         try {
-            $clients = Client::orderBy('created_at','DESC')->paginate(10);
+            $user = auth()->user();
+            $query = Client::orderBy('created_at','DESC');
+            if (!$user->hasRole('admin')) {
+                // Jika bukan admin, hanya ambil client yang diinputkan oleh pengguna yang terkait
+                $query->where('user_id', $user->id);
+            };
+            $clients = $query->paginate(10);
             return view('pages.clients.clients',compact(
                 'clients'
             ));
@@ -39,8 +45,10 @@ class ClientController extends Controller
         ];
         
         try {
+
             
             $validatedData = $request->validate($rules);
+            $validatedData['user_id'] = auth()->user()->id;
     
             Client::create($validatedData);
     
@@ -93,7 +101,13 @@ class ClientController extends Controller
 
     public function softDelete(){
         try {
-            $clients = Client::onlyTrashed()->orderBy('created_at','DESC')->paginate(10);
+            $user = auth()->user();
+            $query =  Client::onlyTrashed()->orderBy('created_at','DESC');
+            if (!$user->hasRole('admin')) {
+                // Jika bukan admin, hanya ambil client yang diinputkan oleh pengguna yang terkait
+                $query->where('user_id', $user->id);
+            };
+            $clients = $query->paginate(10);
             return view('pages.clients.softdelets',compact(
                 'clients'
             ));
