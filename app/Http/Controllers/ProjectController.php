@@ -61,6 +61,8 @@ class ProjectController extends Controller
     }
 
     public function store(Request $request){
+
+        dd($request->all());
         $rules = [
             'title' => ['required'],
             'description' => ['required'],
