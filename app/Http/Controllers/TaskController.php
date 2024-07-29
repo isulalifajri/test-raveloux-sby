@@ -15,7 +15,9 @@ class TaskController extends Controller
     public function index(Request $request){
         try {
             $deadline = $request->query('deadline');
+            $status = $request->query('status');
             $user = auth()->user();
+            
             $query = Task::with(['user:id,first_name', 'client:id,contact_name'])
             ->where('status', '!=', 'done') // Pastikan hanya mengambil task yang belum selesai
             ->orderBy('deadline', 'ASC'); // Urutkan berdasarkan deadline dari yang terdekat
@@ -28,6 +30,10 @@ class TaskController extends Controller
             if ($deadline) {
                 $query->where('deadline', $deadline);
             }
+            if ($status) {
+                $query->where('status', $status);
+            }
+            
             $tasks = $query->paginate(10);
             return view('pages.tasks.tasks',compact(
                 'tasks'

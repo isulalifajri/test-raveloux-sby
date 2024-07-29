@@ -15,6 +15,17 @@
                     <div class="col-md-4 col-12">
                         <input type="date" class="form-control" name="deadline" id="deadline" value="{{ request('deadline') }}">
                     </div>
+                    <div class="col-md-4 col-12">
+                        @php
+                            $status = ['open', 'close','done','in progress'];  
+                        @endphp
+                        <select class="form-select w-100" id="status" name="status">
+                            <option value="">Select Status</option>
+                            @foreach ($status as $st)
+                                <option value="{{ $st }}" {{ request('status') == $st ? 'selected' : '' }}>{{ $st }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <button class="btn btn-secondary" type="submit">Filter Data</button>
                     <a href="{{ route('tasks') }}" class="btn btn-secondary"><i data-feather="refresh-cw"></i></a>
                 </div>
