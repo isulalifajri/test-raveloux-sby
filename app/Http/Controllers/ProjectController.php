@@ -13,9 +13,19 @@ class ProjectController extends Controller
         try {
             $search = $request->query('search');
             $status = $request->query('status');
+            $user = auth()->user();
 
             $query = Project::with(['user:id,first_name', 'client:id,contact_name'])
                 ->orderBy('created_at', 'DESC');
+
+            if (!$user->hasRole('admin')) {
+                // Jika bukan admin, hanya ambil proyek yang ditugaskan ke pengguna atau klien yang terkait
+                $query->where(function($query) use ($user) {
+                    $query->where('user_id', $user->id)
+                            ->orWhere('client_id', $user->client_id); // Asumsi pengguna memiliki client_id
+                });
+
+            }
 
             if ($search) {
                 $query->where('title', 'LIKE', "%{$search}%"); // Ubah ke LIKE untuk pencarian yang lebih fleksibel

@@ -72,7 +72,7 @@ Route::group(['middleware' => ['auth','notification']], function () {
     Route::delete('clients/{id}/forcedelete/', [ClientController::class,'forcedelete'])->name('forcedelete.clients')->middleware('role:admin');
 
     // projects
-    Route::get('projects', [ProjectController::class,'index'])->name('projects')->middleware('role:admin');
+    Route::get('projects', [ProjectController::class,'index'])->name('projects')->middleware('role:admin|user');
     Route::get('projects/create', [ProjectController::class,'create'])->name('create.projects')->middleware('role:admin');
     Route::post('projects/store', [ProjectController::class,'store'])->name('store.projects')->middleware('role:admin');
     Route::get('projects/{project}/edit', [ProjectController::class,'edit'])->name('edit.projects')->middleware('role:admin');

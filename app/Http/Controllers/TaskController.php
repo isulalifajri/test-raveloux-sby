@@ -15,9 +15,16 @@ class TaskController extends Controller
     public function index(Request $request){
         try {
             $deadline = $request->query('deadline');
+            $user = auth()->user();
             $query = Task::with(['user:id,first_name', 'client:id,contact_name'])
             ->where('status', '!=', 'done') // Pastikan hanya mengambil task yang belum selesai
             ->orderBy('deadline', 'ASC'); // Urutkan berdasarkan deadline dari yang terdekat
+            
+            if (!$user->hasRole('admin')) {
+                // Jika bukan admin, hanya ambil proyek yang ditugaskan ke pengguna yang terkait
+                $query->where('user_id', $user->id);
+            };
+
             if ($deadline) {
                 $query->where('deadline', $deadline);
             }

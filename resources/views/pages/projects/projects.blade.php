@@ -4,10 +4,12 @@
     <div class="container-fluid p-0">
 
         <h1 class="h3 mb-3"><strong>Data Projects</h1>
-            <div class="d-flex gap-1">
-                <a href="{{ route('create.projects') }}" class="btn btn-primary">Tambah Data</a>
-                <a href="{{ route('softDeletes.projects') }}" class="btn btn-warning">softDeletes</a>
-            </div>
+            @if (auth()->user()->hasRole('admin'))
+                <div class="d-flex gap-1">
+                    <a href="{{ route('create.projects') }}" class="btn btn-primary">Tambah Data</a>
+                    <a href="{{ route('softDeletes.projects') }}" class="btn btn-warning">softDeletes</a>
+                </div>
+            @endif
             <form action="">
                 <div class="d-flex flex-wrap gap-1 my-2">
                     <div class="col-md-4 col-12">
