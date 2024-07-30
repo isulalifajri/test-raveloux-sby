@@ -22,14 +22,23 @@ class Project extends Model implements HasMedia
         return $this->belongsTo(Client::class);
     }
 
+    // public function getProductsUrlAttribute()
+    // {
+    //     // Mengambil URL gambar pertama dari koleksi 'images/projects'
+    //     if ($this->hasMedia('images/projects')) {
+    //         return $this->getFirstMediaUrl('images/projects');
+    //     }
+        
+    //     // Mengembalikan URL gambar default jika tidak ada media
+    //     return asset('no-image.jpg');
+    // }
+
     public function getProductsUrlAttribute()
-{
-    // Mengambil URL gambar pertama dari koleksi 'images/projects'
-    if ($this->hasMedia('images/projects')) {
-        return $this->getFirstMediaUrl('images/projects');
+    {
+        if ($this->hasMedia('images/projects')) {
+            $mediaItems = $this->getMedia('images');
+        }
+
+        return [asset('no-image.jpg')];
     }
-    
-    // Mengembalikan URL gambar default jika tidak ada media
-    return asset('no-image.jpg');
-}
 }

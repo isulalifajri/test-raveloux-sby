@@ -3,14 +3,37 @@
     <div class="mt-1">
         @if($project->hasMedia('images/projects'))
             @php
-                $mediaItem = $project->getFirstMedia('images/projects');
+                $mediaItems = $project->getMedia('images/projects');
             @endphp
-            <div class="col-md-3">
-                <img src="{{ $mediaItem->getUrl() }}" 
-                class="img-preview img-fluid mb-3 d-block" 
-                alt="{{ $mediaItem->name }}" 
-                id="myImg">
+           <div class="d-flex flex-wrap gap-1 mb-2">
+                @foreach ($mediaItems as $mediaItem)
+                    <div class="col-md-3 d-flex justify-content-center align-items-center border rounded p-2 position-relative">
+                        <img src="{{ $mediaItem->getUrl() }}" 
+                            class="img-fluid rounded" 
+                            alt="{{ $mediaItem->name }}" 
+                            id="myImg">
+
+                        {{-- <form action="{{ route('projects.image.destroy', [$project->id,$mediaItem->id]) }}" method="POST">
+                            @csrf
+                            @method('delete')
+                            <button type="submit" 
+                                class="btn btn-danger position-absolute top-0 end-0" 
+                                aria-label="Remove image">
+                                <span data-feather="trash-2"></span>
+                            </button>
+                        </form> --}}
+
+                        <!-- Link untuk Menghapus Gambar -->
+                        <a href="{{ route('projects.image.destroy', [$project->id, $mediaItem->id]) }}" 
+                            class="btn btn-danger p-1 position-absolute top-0 end-0 m-1"
+                            aria-label="Remove image">
+                            <span data-feather="trash-2"></span>
+                        </a>
+
+                    </div>
+                @endforeach
             </div>
+        
         @else
             <div class="col-md-3">
                 <img src="{{ asset('no-image.jpg') }}" class="img-preview img-fluid img-circle" alt="default">
@@ -273,7 +296,7 @@
 
     function addInputField() {
         const inputContainer = document.getElementById('input-container');
-        
+
         if (inputContainer.children.length >= 8) {
             alert('You can upload a maximum of 8 images in total.');
             return;

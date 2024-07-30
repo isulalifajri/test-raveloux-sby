@@ -23,7 +23,7 @@
                         @foreach ($projects as $paginate => $item)
                             <tr>
                                 <td>{{ $projects->firstItem() + $paginate }}</td>
-                                <td><img src="{{ $item->products_url }}" alt="{{ $item->title }}" width="70px"></td>
+                                {{-- <td><img src="{{ $item->products_url }}" alt="{{ $item->title }}" width="70px"></td> --}}
                                 <td>{{ $item->title }}</td>
                                 <td>{!! optional($item->user)->first_name ?? '<span class="text-danger">User tidak ada / User dihapus</span>' !!}</td>
                                 <td>{!! optional($item->client)->contact_name ?? '<span class="text-danger">Client tidak ada / Client dihapus</span>' !!}</td>

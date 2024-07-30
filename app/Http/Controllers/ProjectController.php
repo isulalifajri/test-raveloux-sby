@@ -62,7 +62,6 @@ class ProjectController extends Controller
 
     public function store(Request $request){
 
-        dd($request->all());
         $rules = [
             'title' => ['required'],
             'description' => ['required'],
@@ -78,9 +77,13 @@ class ProjectController extends Controller
             $project = Project::create($validatedData);
 
             // Jika ada gambar dalam request
-            if ($request->hasFile('image')) {
+            if ($request->hasFile('images')) {
                 // Tambahkan media baru ke koleksi 'images/projects'
-                $project->addMedia($request->file('image'))->toMediaCollection('images/projects');
+                // $project->addMedia($request->file('image'))->toMediaCollection('images/projects'); // add image 
+                $project->addMultipleMediaFromRequest(['images'])
+                    ->each(function ($fileAdder) {
+                        $fileAdder->toMediaCollection('images/projects');
+                    }); // add multiple image
             }
     
             return redirect()->route('projects')->with('success', 'Data Berhasil ditambahkan');
@@ -111,13 +114,13 @@ class ProjectController extends Controller
         ]);
         
         try {
-            if ($request->hasFile('image')) {
+            if ($request->hasFile('images')) {
                 // Hapus media lama jika ada
                 if ($project->hasMedia('images/projects')) {
                     $project->clearMediaCollection('images/projects');
                 }
                 // Tambahkan media baru ke koleksi 'images/profiles'
-                $project->addMedia($request->file('image'))->toMediaCollection('images/projects');
+                $project->addMedia($request->file('images'))->toMediaCollection('images/projects');
             }
 
             $project->update($validatedData);
@@ -136,6 +139,15 @@ class ProjectController extends Controller
             return back()->with('success-danger', 'Ada yang Error'. $th->getMessage());
         }
 
+    }
+
+    public function destroyImage(Project $project, $id){
+       $media = $project->getMedia('images/projects');
+
+       $image = $media->where('id', $id)->first();
+       $image->delete();
+
+       return redirect()->back()->with('success-danger', 'Image berhasil di hapus');
     }
 
     public function softDelete(){

@@ -78,6 +78,7 @@ Route::group(['middleware' => ['auth','notification']], function () {
     Route::get('projects/{project}/edit', [ProjectController::class,'edit'])->name('edit.projects')->middleware('role:admin');
     Route::put('projects/{project}/update', [ProjectController::class,'update'])->name('update.projects')->middleware('role:admin');
     Route::delete('projects/{project}/destroy', [ProjectController::class,'destroy'])->name('destroy.projects')->middleware('role:admin');
+    Route::get('projects/{project}/destroyImage/{id}', [ProjectController::class,'destroyImage'])->name('projects.image.destroy')->middleware('role:admin');
 
     Route::get('projects/softDelete', [ProjectController::class,'softDelete'])->name('softDeletes.projects')->middleware('role:admin');
     Route::get('projects/{id}/restore', [ProjectController::class, 'restoreData'])->name('restore.projects')->middleware('role:admin');

@@ -48,7 +48,17 @@
                         @forelse ($projects as $paginate => $item)
                             <tr>
                                 <td>{{ $projects->firstItem() + $paginate }}</td>
-                                <td><img src="{{ $item->products_url }}" alt="{{ $item->title }}" width="70px"></td>
+                                <td>
+                                    @php
+                                        $mediaItem = $item->getFirstMedia('images/projects');
+                                    @endphp
+                                    
+                                    @if ($mediaItem)
+                                        <img src="{{ $mediaItem->getUrl() }}" alt="" width="70px" style="margin-right: 5px;">
+                                    @else
+                                        <img src="{{ asset('no-image.jpg') }}" alt="No image available" width="70px" style="margin-right: 5px;">
+                                    @endif
+                                </td>
                                 <td>{{ $item->title }}</td>
                                 <td>{!! optional($item->user)->first_name ?? '<span class="text-danger">User tidak ada / User dihapus</span>' !!}</td>
                                 <td>{!! optional($item->client)->contact_name ?? '<span class="text-danger">Client tidak ada / Client dihapus</span>' !!}</td>
