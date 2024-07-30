@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Client;
 use App\Models\Project;
-use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ProjectController extends Controller
 {
@@ -69,6 +70,7 @@ class ProjectController extends Controller
             'user_id' => ['required'],
             'client_id' => ['required'],
             'status' => ['required','string'],
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,webp,avif|max:10048', // validasi untuk gambar
         ];
         try {
      
@@ -104,6 +106,7 @@ class ProjectController extends Controller
 
     public function update(Request $request, Project $project )
     {
+
         $validatedData = $request->validate([
             'title' => ['required'],
             'description' => ['required'],
@@ -111,16 +114,19 @@ class ProjectController extends Controller
             'user_id' => ['required'],
             'client_id' => ['required'],
             'status' => ['required','string'],
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,webp,avif|max:10048', // validasi untuk gambar
         ]);
         
         try {
             if ($request->hasFile('images')) {
                 // Hapus media lama jika ada
-                if ($project->hasMedia('images/projects')) {
-                    $project->clearMediaCollection('images/projects');
-                }
-                // Tambahkan media baru ke koleksi 'images/profiles'
-                $project->addMedia($request->file('images'))->toMediaCollection('images/projects');
+                // if ($project->hasMedia('images/projects')) {
+                //     $project->clearMediaCollection('images/projects');
+                // }
+               // Add new media to the collection 'images/projects'
+                foreach ($request->file('images') as $file) {
+                    $project->addMedia($file)->toMediaCollection('images/projects');
+                }// add multiple image
             }
 
             $project->update($validatedData);

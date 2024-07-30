@@ -12,7 +12,7 @@
                     @csrf
                       <div class="card-body demo-vertical-spacing demo-only-element">
     
-                          @include('pages.projects._form')
+                          @include('pages.projects._formEdit')
       
                           <div class="mt-2">
                               <button type="submit" class="btn btn-primary"><i class="bx bx-save me-sm-1"></i> Save </button>
