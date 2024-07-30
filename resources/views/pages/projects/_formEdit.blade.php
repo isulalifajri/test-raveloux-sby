@@ -31,23 +31,29 @@
     <div id="image-previews" class="d-flex flex-wrap gap-2 mt-3">
         <!-- Image previews will be inserted here -->
     </div>
-    <div id="input-container">
-        <div class="input-group input-group-merge mb-3" id="input-group" data-index="0">
-            <input
-                type="file"
-                accept="image/png, image/gif, image/jpeg, image/jpg, image/webp, image/avif"
-                name="images[]"
-                class="form-control @error('images.*') is-invalid @enderror"
-                id="images-prv-0"
-                multiple
-                onchange="previewImages(event, 0)" />
-        </div>
-        @error('images.*')
-            <div class="invalid-feedback d-block">
-                {{ $message }}
+
+    @dump(['Total Image' => $project->getMedia('images/projects')->count()])
+
+    @if ($project->getMedia('images/projects')->count() < 8)
+        <div id="input-container">
+            <div class="input-group input-group-merge mb-3" id="input-group" data-index="0">
+                <input
+                    type="file"
+                    accept="image/png, image/gif, image/jpeg, image/jpg, image/webp, image/avif"
+                    name="images[]"
+                    class="form-control @error('images.*') is-invalid @enderror"
+                    id="images-prv-0"
+                    multiple
+                    onchange="previewImages(event, 0)" />
             </div>
-        @enderror
-    </div>
+            @error('images.*')
+                <div class="invalid-feedback d-block">
+                    {{ $message }}
+                </div>
+            @enderror
+        </div>
+        
+    @endif
     <span style="font-size: 11px">*Only uploading images is allowed (max 8 images per input)</span>
     <div class="d-block">
         <button type="button" class="btn btn-secondary" onclick="addInputField()">Add More Images</button>
@@ -197,6 +203,13 @@
         const input = event.target;
         const previewContainer = document.getElementById('image-previews');
         const files = input.files;
+
+        const totalImages = updateInputFieldLimit();
+
+        if (totalImages > 8) {
+            alert('Anda dapat mengupload maksimal 8 gambar.');
+            return;
+        }
 
         for (let i = 0; i < files.length; i++) {
             const file = files[i];
