@@ -102,7 +102,7 @@ class UserController extends Controller
                     $user->givePermissionTo(['create.users','store.users','edit.users','update.users','destroy.users']);
                     $user->givePermissionTo(['create.clients','store.clients','edit.clients','update.clients','destroy.clients']);
                     $user->givePermissionTo(['create.projects','store.projects','edit.projects','update.projects','destroy.projects']);
-                    $user->givePermissionTo(['create.tasks','store.tasks','edit.clients','update.clients','detail.tasks','destroy.tasks']);
+                    $user->givePermissionTo(['create.tasks','store.tasks','edit.tasks','update.tasks','detail.tasks','destroy.tasks']);
                 }else{
                     $user->givePermissionTo('detail.tasks');
                     $user->assignRole('user');

@@ -96,7 +96,6 @@ class ProjectController extends Controller
 
     public function edit(Project $project){
         try {
-
             // Periksa izin sebelum melakukan operasi lainnya
             if (!auth()->user()->can('edit.projects')) {
                 abort(403, 'Unauthorized action.');
@@ -107,7 +106,7 @@ class ProjectController extends Controller
 
             return view('pages.projects.edit', compact('project','users','clients'));
         } catch (\Exception $th) {
-            return back()->with('success-danger', 'Ada yang Error'. $th->getMessage());
+            return back()->with('success-danger', 'Ada yang Error =>'. $th->getMessage());
         }
     }
 
