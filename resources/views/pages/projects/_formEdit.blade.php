@@ -1,3 +1,8 @@
+@push('css')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+@endpush
+
 <div class="mt-1">
     @if($project->hasMedia('images/projects'))
         @php
@@ -109,7 +114,7 @@
 
 <div class="mt-1">
     <label class="form-label" for="user_id">User</label>
-      <select class="form-select @error('user_id') is-invalid @enderror cursor-pointer" name="user_id" id="user_id" required>
+      <select class="form-select @error('user_id') is-invalid @enderror cursor-pointer sl2" name="user_id" id="user_id" required>
             <option value="">Select User</option>
             @foreach ($users as $user)
                 @if(old('user_id', $project->user_id) == $user->id)
@@ -128,7 +133,7 @@
 
 <div class="mt-1">
     <label class="form-label" for="client_id">Client</label>
-      <select class="form-select @error('client_id') is-invalid @enderror cursor-pointer" name="client_id" id="client_id" required>
+      <select class="form-select @error('client_id') is-invalid @enderror cursor-pointer sl2" name="client_id" id="client_id" required>
             <option value="">Select client</option>
             @foreach ($clients as $client)
                 @if(old('client_id', $project->client_id) == $client->id)
@@ -151,7 +156,7 @@
     @php
         $status = ['open', 'close','done','in progress'];  
     @endphp
-    <select class="form-select @error('status') is-invalid @enderror cursor-pointer jsn" name="status" id="status" required>
+    <select class="form-select @error('status') is-invalid @enderror cursor-pointer sl2" name="status" id="status" required>
         <option value="">Select Status</option>
         @foreach ($status as $st)
             <option value="{{ $st }}" {{ old('status', $project->status) == $st ? 'selected' : '' }}>{{ $st }}</option>
@@ -359,6 +364,20 @@
         console.log('Jumlah gambar pratinjau setelah menghapus input:', currentPreviewCount);
     }
 </script>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.sl2').select2({
+            theme: "bootstrap-5",
+            selectionCssClass: "select2--medium",
+            dropdownCssClass: "select2--medium",
+            width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+        });
+    });
+</script>
+
 @endpush
 
 

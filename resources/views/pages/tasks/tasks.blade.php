@@ -1,5 +1,12 @@
 @extends('layouts.main')
 
+@push('css')
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+
+@endpush
+
 @section('content')
     <div class="container-fluid p-0">
 
@@ -19,7 +26,7 @@
                         @php
                             $status = ['open', 'close','done','in progress'];  
                         @endphp
-                        <select class="form-select w-100" id="status" name="status">
+                        <select class="form-select w-100 sl2" id="status" name="status">
                             <option value="">Select Status</option>
                             @foreach ($status as $st)
                                 <option value="{{ $st }}" {{ request('status') == $st ? 'selected' : '' }}>{{ $st }}</option>
@@ -88,3 +95,20 @@
             </div>
     </div>
 @endsection
+
+@push('js')
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.sl2').select2({
+            theme: "bootstrap-5",
+            selectionCssClass: "select2--medium",
+            dropdownCssClass: "select2--medium",
+            width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+        });
+    });
+</script>
+    
+@endpush
