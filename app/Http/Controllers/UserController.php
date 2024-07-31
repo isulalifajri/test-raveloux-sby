@@ -46,8 +46,17 @@ class UserController extends Controller
     
             $user = User::create($validatedData);
 
-            $user->givePermissionTo('detail.tasks');
-            $user->assignRole('user');
+            if($request->role == 'admin'){
+                $user->assignRole('admin');
+                $user->givePermissionTo(['create.users','store.users','edit.users','update.users','destroy.users']);
+                $user->givePermissionTo(['create.clients','store.clients','edit.clients','update.clients','destroy.clients']);
+                $user->givePermissionTo(['create.projects','store.projects','edit.clients','update.clients','destroy.clients']);
+                $user->givePermissionTo(['create.tasks','store.tasks','edit.clients','update.clients','detail.tasks','destroy.tasks']);
+            }else{
+                $user->givePermissionTo('detail.tasks');
+                $user->assignRole('user');
+            }
+
     
             return redirect()->route('users')->with('success', 'Data Berhasil ditambahkan');
         } catch (\Exception $th) {
@@ -80,8 +89,28 @@ class UserController extends Controller
             } else {
                 unset($validatedData['password']);
             }
+
+            if ($request->role){
+                // Hapus semua peran pengguna saat ini
+                $user->syncRoles([]);
+                // Hapus semua izin pengguna saat ini
+                $user->syncPermissions([]);
+        
+                if($request->role == 'admin'){
     
+                    $user->assignRole('admin');
+                    $user->givePermissionTo(['create.users','store.users','edit.users','update.users','destroy.users']);
+                    $user->givePermissionTo(['create.clients','store.clients','edit.clients','update.clients','destroy.clients']);
+                    $user->givePermissionTo(['create.projects','store.projects','edit.projects','update.projects','destroy.projects']);
+                    $user->givePermissionTo(['create.tasks','store.tasks','edit.clients','update.clients','detail.tasks','destroy.tasks']);
+                }else{
+                    $user->givePermissionTo('detail.tasks');
+                    $user->assignRole('user');
+                }
+            }
+
             $user->update($validatedData);
+
     
             return redirect()->route('users')->with('success', 'Data Berhasil di Edit');
         } catch (\Exception $th) {

@@ -94,6 +94,24 @@
     @enderror
 </div>
 
+<div class="mt-1">
+    <label class="form-label" for="role">Role</label>
+    @php
+        $role = ['admin','user'];  
+    @endphp
+    <select class="form-select @error('role') is-invalid @enderror cursor-pointer jsn" name="role" id="role" required>
+        <option value="">Select Role</option>
+        @foreach ($role as $st)
+            <option value="{{ $st }}" {{ old('role', $user->getRoleNames()->first()) == $st ? 'selected' : '' }}>{{ $st }}</option>
+        @endforeach
+    </select>
+        @error('role')
+            <div class="invalid-feedback d-block">
+                {{ $message }}
+            </div>
+        @enderror
+</div>
+
 @push('js')
     <script>
         function myFunction() {

@@ -16,11 +16,12 @@ class UserSeeder extends Seeder
     {
         $users = User::factory(30)->create();
 
-        foreach ($users as $user) {
-            $user->assignRole('user');
+        foreach ($users as $roleUser) {
+            $roleUser->assignRole('user');
+            $roleUser->givePermissionTo(['detail.tasks']);
         }
 
-        $admin = User::factory()->create([
+        $roleAdmin = User::factory()->create([
             'first_name' => 'admin',
             'last_name' => 'i am',
             'password' => bcrypt('admin'),
@@ -29,6 +30,12 @@ class UserSeeder extends Seeder
             'address' => 'address admin',
         ]);
 
-        $admin->assignRole('admin');
+        $roleAdmin->assignRole('admin');
+        $roleAdmin->givePermissionTo(['create.users','store.users','edit.users','update.users','destroy.users']);
+        $roleAdmin->givePermissionTo(['create.clients','store.clients','edit.clients','update.clients','destroy.clients']);
+        $roleAdmin->givePermissionTo(['create.projects','store.projects','edit.projects','update.projects','destroy.projects']);
+        $roleAdmin->givePermissionTo(['create.tasks','store.tasks','edit.clients','update.clients','detail.tasks','destroy.tasks']);
+
+
     }
 }

@@ -44,10 +44,11 @@ class RolePermissionSeeder extends Seeder
 
         Role::create(['name' => 'admin']);
         Role::create(['name' => 'user']);
+        
         $roleAdmin = Role::findByName('admin');
         $roleAdmin->givePermissionTo(['create.users','store.users','edit.users','update.users','destroy.users']);
         $roleAdmin->givePermissionTo(['create.clients','store.clients','edit.clients','update.clients','destroy.clients']);
-        $roleAdmin->givePermissionTo(['create.projects','store.projects','edit.clients','update.clients','destroy.clients']);
+        $roleAdmin->givePermissionTo(['create.projects','store.projects','edit.projects','update.projects','destroy.projects']);
         $roleAdmin->givePermissionTo(['create.tasks','store.tasks','edit.clients','update.clients','detail.tasks','destroy.tasks']);
 
         $roleUser = Role::findByName('user');

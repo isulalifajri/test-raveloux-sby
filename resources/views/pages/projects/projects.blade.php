@@ -66,12 +66,15 @@
                                 <td><span class="badge bg-primary">{{ $item->status }}</span></td>
                                 <td>
                                     <div class="d-flex gap-1">
+                                        <a href="{{ route('detail.projects', $item->id) }}" class="btn btn-primary btn-sm">Detail</a>
+                                        @if (auth()->user()->hasRole('admin'))
                                         <a href="{{ route('edit.projects', $item->id) }}" class="btn btn-info btn-sm">Edit</a>
                                         <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('destroy.projects', $item->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                         </form>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>

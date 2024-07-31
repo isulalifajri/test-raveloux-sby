@@ -48,50 +48,51 @@ Route::group(['middleware' => ['auth','notification']], function () {
     Route::get('dashboard',[DashboardController::class, 'index'])->name('dashboard');
 
     // users
-    Route::get('users', [UserController::class,'index'])->name('users')->middleware(['role:admin']);
-    Route::get('users/create', [UserController::class,'create'])->name('create.users')->middleware(['role:admin']);
-    Route::post('users/store', [UserController::class,'store'])->name('store.users')->middleware(['role:admin']);
-    Route::get('users/{user}/edit', [UserController::class,'edit'])->name('edit.users')->middleware(['role:admin']);
-    Route::put('users/{user}/update', [UserController::class,'update'])->name('update.users')->middleware(['role:admin']);
-    Route::delete('users/{user}/destroy', [UserController::class,'destroy'])->name('destroy.users')->middleware(['role:admin']);
+    Route::get('users', [UserController::class,'index'])->name('users');
+    Route::get('users/create', [UserController::class,'create'])->name('create.users');
+    Route::post('users/store', [UserController::class,'store'])->name('store.users');
+    Route::get('users/{user}/edit', [UserController::class,'edit'])->name('edit.users');
+    Route::put('users/{user}/update', [UserController::class,'update'])->name('update.users');
+    Route::delete('users/{user}/destroy', [UserController::class,'destroy'])->name('destroy.users');
 
-    Route::get('users/softDelete', [UserController::class,'softDelete'])->name('softDeletes.users')->middleware('role:admin');
-    Route::get('users/{id}/restore', [UserController::class, 'restoreData'])->name('restore.users')->middleware('role:admin');
-    Route::delete('users/{id}/forcedelete/', [UserController::class,'forcedelete'])->name('forcedelete.users')->middleware('role:admin');
+    Route::get('users/softDelete', [UserController::class,'softDelete'])->name('softDeletes.users');
+    Route::get('users/{id}/restore', [UserController::class, 'restoreData'])->name('restore.users');
+    Route::delete('users/{id}/forcedelete/', [UserController::class,'forcedelete'])->name('forcedelete.users');
 
     // clients
-    Route::get('clients', [ClientController::class,'index'])->name('clients')->middleware('role:admin|user');
-    Route::get('clients/create', [ClientController::class,'create'])->name('create.clients')->middleware('role:admin|user');
-    Route::post('clients/store', [ClientController::class,'store'])->name('store.clients')->middleware('role:admin|user');
-    Route::get('clients/{client}/edit', [ClientController::class,'edit'])->name('edit.clients')->middleware('role:admin|user');
-    Route::put('clients/{client}/update', [ClientController::class,'update'])->name('update.clients')->middleware('role:admin|user');
-    Route::delete('clients/{client}/destroy', [ClientController::class,'destroy'])->name('destroy.clients')->middleware('role:admin|user');
+    Route::get('clients', [ClientController::class,'index'])->name('clients');
+    Route::get('clients/create', [ClientController::class,'create'])->name('create.clients');
+    Route::post('clients/store', [ClientController::class,'store'])->name('store.clients');
+    Route::get('clients/{client}/edit', [ClientController::class,'edit'])->name('edit.clients');
+    Route::put('clients/{client}/update', [ClientController::class,'update'])->name('update.clients');
+    Route::delete('clients/{client}/destroy', [ClientController::class,'destroy'])->name('destroy.clients');
 
-    Route::get('clients/softDelete', [ClientController::class,'softDelete'])->name('softDeletes.clients')->middleware('role:admin|user');
-    Route::get('clients/{id}/restore', [ClientController::class, 'restoreData'])->name('restore.clients')->middleware('role:admin|user');
-    Route::delete('clients/{id}/forcedelete/', [ClientController::class,'forcedelete'])->name('forcedelete.clients')->middleware('role:admin|user');
+    Route::get('clients/softDelete', [ClientController::class,'softDelete'])->name('softDeletes.clients');
+    Route::get('clients/{id}/restore', [ClientController::class, 'restoreData'])->name('restore.clients');
+    Route::delete('clients/{id}/forcedelete/', [ClientController::class,'forcedelete'])->name('forcedelete.clients');
 
     // projects
-    Route::get('projects', [ProjectController::class,'index'])->name('projects')->middleware('role:admin|user');
-    Route::get('projects/create', [ProjectController::class,'create'])->name('create.projects')->middleware('role:admin');
-    Route::post('projects/store', [ProjectController::class,'store'])->name('store.projects')->middleware('role:admin');
-    Route::get('projects/{project}/edit', [ProjectController::class,'edit'])->name('edit.projects')->middleware('role:admin');
-    Route::put('projects/{project}/update', [ProjectController::class,'update'])->name('update.projects')->middleware('role:admin');
-    Route::delete('projects/{project}/destroy', [ProjectController::class,'destroy'])->name('destroy.projects')->middleware('role:admin');
-    Route::get('projects/{project}/destroyImage/{id}', [ProjectController::class,'destroyImage'])->name('projects.image.destroy')->middleware('role:admin');
+    Route::get('projects', [ProjectController::class,'index'])->name('projects');
+    Route::get('projects/create', [ProjectController::class,'create'])->name('create.projects');
+    Route::post('projects/store', [ProjectController::class,'store'])->name('store.projects');
+    Route::get('projects/{project}/edit', [ProjectController::class,'edit'])->name('edit.projects');
+    Route::put('projects/{project}/update', [ProjectController::class,'update'])->name('update.projects');
+    Route::delete('projects/{project}/destroy', [ProjectController::class,'destroy'])->name('destroy.projects');
+    Route::get('projects/{project}/destroyImage/{id}', [ProjectController::class,'destroyImage'])->name('projects.image.destroy');
+    Route::get('projects/detail/{project}', [ProjectController::class,'detail'])->name('detail.projects');
 
-    Route::get('projects/softDelete', [ProjectController::class,'softDelete'])->name('softDeletes.projects')->middleware('role:admin');
-    Route::get('projects/{id}/restore', [ProjectController::class, 'restoreData'])->name('restore.projects')->middleware('role:admin');
-    Route::delete('projects/{id}/forcedelete/', [ProjectController::class,'forcedelete'])->name('forcedelete.projects')->middleware('role:admin');
+    Route::get('projects/softDelete', [ProjectController::class,'softDelete'])->name('softDeletes.projects');
+    Route::get('projects/{id}/restore', [ProjectController::class, 'restoreData'])->name('restore.projects');
+    Route::delete('projects/{id}/forcedelete/', [ProjectController::class,'forcedelete'])->name('forcedelete.projects');
 
 
     // tasks
     Route::get('tasks', [TaskController::class,'index'])->name('tasks');
-    Route::get('tasks/create', [TaskController::class,'create'])->name('create.tasks')->middleware('role:admin');
-    Route::post('tasks/store', [TaskController::class,'store'])->name('store.tasks')->middleware('role:admin');
-    Route::get('tasks/{task}/edit', [TaskController::class,'edit'])->name('edit.tasks')->middleware('role:admin');
-    Route::put('tasks/{task}/update', [TaskController::class,'update'])->name('update.tasks')->middleware('role:admin');
-    Route::delete('tasks/{task}/destroy', [TaskController::class,'destroy'])->name('destroy.tasks')->middleware('role:admin');
+    Route::get('tasks/create', [TaskController::class,'create'])->name('create.tasks');
+    Route::post('tasks/store', [TaskController::class,'store'])->name('store.tasks');
+    Route::get('tasks/{task}/edit', [TaskController::class,'edit'])->name('edit.tasks');
+    Route::put('tasks/{task}/update', [TaskController::class,'update'])->name('update.tasks');
+    Route::delete('tasks/{task}/destroy', [TaskController::class,'destroy'])->name('destroy.tasks');
     Route::get('tasks/detail/{task}', [TaskController::class,'detail'])->name('detail.tasks');
 
     Route::get('tasks/softDelete', [TaskController::class,'softDelete'])->name('softDeletes.tasks')->middleware('role:admin');
