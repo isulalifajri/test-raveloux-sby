@@ -19,6 +19,14 @@
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 	@stack('css')
+
+	<style>
+        @media (max-width: 404px) {
+            .dropdown-menu.dropdown-menu-end.dropdown-menu-lg.py-0.rspnv-nt-mobile.show {
+                right: -50px !important;
+            }
+        }
+    </style>
 </head>
 
 <body>

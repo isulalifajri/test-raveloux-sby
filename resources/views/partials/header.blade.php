@@ -11,7 +11,7 @@
                         <span class="indicator">{{ $unreadCount }}</span>
                     </div>
                 </a>
-                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown" style="min-width: 20rem !important">
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0 rspnv-nt-mobile" aria-labelledby="alertsDropdown" style="min-width: 20rem !important">
                     <div class="dropdown-menu-header">
                         {{ $unreadCount }} New Notifications
                     </div>
