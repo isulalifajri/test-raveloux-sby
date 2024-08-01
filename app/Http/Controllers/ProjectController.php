@@ -16,7 +16,7 @@ class ProjectController extends Controller
             $status = $request->query('status');
             $user = auth()->user();
 
-            $query = Project::with(['user:id,first_name', 'client:id,contact_name'])
+            $query = Project::with(['user:id,first_name', 'client:id,contact_name','media'])
                 ->orderBy('created_at', 'DESC');
 
             if (!$user->hasRole('admin')) {

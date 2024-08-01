@@ -58,11 +58,7 @@
                                         $mediaItem = $item->getFirstMedia('images/projects');
                                     @endphp
                                     
-                                    @if ($mediaItem)
-                                        <img src="{{ $mediaItem->getUrl() }}" alt="" width="70px" style="margin-right: 5px;">
-                                    @else
-                                        <img src="{{ asset('no-image.jpg') }}" alt="No image available" width="70px" style="margin-right: 5px;">
-                                    @endif
+                                    <img src="{{ $mediaItem ? $mediaItem->getUrl() : asset('no-image.jpg') }}" alt="{{ $mediaItem ? $mediaItem->name : 'No image available' }}" width="70px" style="margin-right: 5px;">
                                 </td>
                                 <td>{{ $item->title }}</td>
                                 <td>{!! optional($item->user)->first_name ?? '<span class="text-danger">User tidak ada / User dihapus</span>' !!}</td>
