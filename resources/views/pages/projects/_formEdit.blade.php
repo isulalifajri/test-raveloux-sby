@@ -1,6 +1,21 @@
 @push('css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+
+    {{-- link css datepicker bootstrap --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+
+    <style>
+        .datepicker{
+            width: 285px;
+        }
+        .datepicker table{
+            width: 100%;
+        }
+        .datepicker tfoot tr th {
+            background: #eee;
+        }
+    </style>
 @endpush
 
 <div class="mt-1">
@@ -99,11 +114,12 @@
     <label class="form-label" for="deadline">Deadline</label>
     <div class="input-group input-group-merge">
         <input
-        type="date"
+        type="text"
         class="form-control datepicker @error('deadline') is-invalid @enderror"
         name="deadline"
         id="deadline" placeholder="yyyy-mm-dd"
         value="{{ old('deadline', $project->deadline) }}" required />
+        <span class="input-group-text" id="cldr-icon"><i data-feather="calendar"></i></span>
     </div>
     @error('deadline')
       <div class="invalid-feedback d-block">
@@ -376,6 +392,22 @@
             width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
         });
     });
+</script>
+
+{{-- datepicker bootstrap --}}
+<script src= "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"> </script> 
+<script> 
+    document.getElementById('cldr-icon').addEventListener('click', function() {
+            document.getElementById('deadline').focus();
+        });
+    $(function () { 
+        $(".datepicker").datepicker({  
+            format:'yyyy-mm-dd',
+            autoclose: true,  
+            todayHighlight: true, 
+            todayBtn : "linked", 
+        }); 
+    }); 
 </script>
 
 @endpush
