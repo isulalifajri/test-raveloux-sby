@@ -18,7 +18,7 @@ class TaskController extends Controller
             $status = $request->query('status');
             $user = auth()->user();
             
-            $query = Task::with(['user:id,first_name', 'client:id,contact_name'])
+            $query = Task::with(['user:id,first_name', 'client:id,contact_name','project:id,title'])
             // ->where('status', '!=', 'done') // Pastikan hanya mengambil task yang belum selesai
             ->orderBy('deadline', 'ASC'); // Urutkan berdasarkan deadline dari yang terdekat
             
