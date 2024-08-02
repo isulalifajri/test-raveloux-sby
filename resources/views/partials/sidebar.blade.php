@@ -39,10 +39,18 @@
                 Authentication
             </li>
 
+            @can('admin')
+                <li class="sidebar-item {{ Request::is('managementUsers*') ? 'active' : '' }}">
+                    <a class="sidebar-link" href="{{ route('managementUsers') }}">
+                    <i class="align-middle" data-feather="shield"></i> <span class="align-middle">User Management</span></a>
+                </li> 
+            @endcan
+
             <li class="sidebar-item {{ Request::is('profiles*') ? 'active' : '' }}">
                 <a class="sidebar-link" href="{{ route('profiles') }}">
                 <i class="align-middle" data-feather="user-check"></i> <span class="align-middle">Profile</span></a>
             </li> 
+
             <li class="sidebar-item {{ Request::is('password*') ? 'active' : '' }}">
                 <a class="sidebar-link" href="{{ route('password.request') }}">
                 <i class="align-middle" data-feather="settings"></i> <span class="align-middle">Reset Password</span></a>

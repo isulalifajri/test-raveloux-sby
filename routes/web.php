@@ -14,6 +14,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserManagementController;
 use Illuminate\Notifications\DatabaseNotification;
 
 /*
@@ -116,9 +117,14 @@ Route::group(['middleware' => ['auth','notification']], function () {
         return 'test permission1';
     })->middleware(['role_or_permission:detail|admin']);
 
+    // Manajement User
+    Route::get('managementUsers', [UserManagementController::class,'index'])->name('managementUsers');
+    Route::get('managementUsers/edit/{user}', [UserManagementController::class,'edit'])->name('managementUsers.edit');
+    Route::put('managementUsers/update/{user}', [UserManagementController::class,'update'])->name('managementUsers.update');
+
     // profile
     Route::get('profiles', [ProfileController::class,'index'])->name('profiles');
-    Route::post('profiles/uploadImage/{user}', [ProfileController::class,'uploadImage'])->name('profiles.uploadImage');
+    Route::post('profiles/uploadImage/{id}', [ProfileController::class,'uploadImage'])->name('profiles.uploadImage');
     Route::put('profiles/update/{user}', [ProfileController::class, 'updateprofile'])->name('profiles.update');
     
 

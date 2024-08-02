@@ -50,6 +50,11 @@ class ProjectController extends Controller
 
     public function create(){
         try {
+            $user = auth()->user();
+            if (!$user->hasRole('admin') && !$user->can('create.projects')) {
+                abort(403, 'Unauthorized action.');
+            }
+
             $project = new Project();
             $users = User::all();
             $clients = Client::all();
@@ -95,9 +100,10 @@ class ProjectController extends Controller
     }
 
     public function edit(Project $project){
+        
         try {
-            // Periksa izin sebelum melakukan operasi lainnya
-            if (!auth()->user()->can('edit.projects')) {
+            $user = auth()->user();
+            if (!$user->hasRole('admin') && !$user->can('edit.projects')) {
                 abort(403, 'Unauthorized action.');
             }
 
