@@ -124,7 +124,7 @@ Route::group(['middleware' => ['auth','notification']], function () {
 
     // profile
     Route::get('profiles', [ProfileController::class,'index'])->name('profiles');
-    Route::post('profiles/uploadImage/{id}', [ProfileController::class,'uploadImage'])->name('profiles.uploadImage');
+    Route::post('profiles/uploadImage/{user}', [ProfileController::class,'uploadImage'])->name('profiles.uploadImage');
     Route::put('profiles/update/{user}', [ProfileController::class, 'updateprofile'])->name('profiles.update');
     
 
