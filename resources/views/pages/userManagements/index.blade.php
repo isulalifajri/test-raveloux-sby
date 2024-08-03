@@ -5,7 +5,9 @@
 
         <h1 class="h3 mb-3"><strong>Data Management Users</h1>
             <div class="d-flex gap-1">
+                <a href="{{ route('managementUsers.permission') }}" class="btn btn-info">List Permission</a>
             </div>
+
             <div class="table-responsive">
                 <table class="table table-hover my-0">
                     <thead>

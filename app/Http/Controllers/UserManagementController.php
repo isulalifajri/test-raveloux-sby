@@ -33,4 +33,10 @@ class UserManagementController extends Controller
 
         return redirect()->route('managementUsers')->with('success', 'Permission Users Berhasil di Update');
     }
+
+    public function permission(){
+        $permissions = Permission::orderBy('created_at','DESC')->paginate(10);
+
+        return view('pages.userManagements.permission', compact('permissions'));
+    }
 }

@@ -32,16 +32,6 @@ Route::get('/', function () {
     return view('auth.login');
 })->name('home');
 
-
-// Route::get('/dashboard', function () {
-//     $notifications = DatabaseNotification::latest()->take(5)->get();
-//     $unreadCount = DatabaseNotification::whereNull('read_at')->count();
-//     return view('dashboard',[
-//         'unreadCount' => $unreadCount,
-//         'notifications' => $notifications,
-//     ]);
-// })->name('dashboard')->middleware('auth');
-
 Route::get('/login', [LoginController::class,'index'])->name('login');
 
 Route::group(['middleware' => ['auth','notification']], function () {
@@ -118,6 +108,7 @@ Route::group(['middleware' => ['auth','notification']], function () {
     })->middleware(['role_or_permission:detail|admin']);
 
     // Manajement User
+    Route::get('managementUsers/permission', [UserManagementController::class,'permission'])->name('managementUsers.permission');
     Route::get('managementUsers', [UserManagementController::class,'index'])->name('managementUsers');
     Route::get('managementUsers/edit/{user}', [UserManagementController::class,'edit'])->name('managementUsers.edit');
     Route::put('managementUsers/update/{user}', [UserManagementController::class,'update'])->name('managementUsers.update');
