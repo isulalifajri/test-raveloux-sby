@@ -67,6 +67,7 @@
     @enderror
 </div>
 
+@if(request()->segment(count(request()->segments())) == 'create') 
 <div class="mt-1">
     <label for="password" class="form-label">Password:</label>
     <div class="input-group mb-1">
@@ -84,6 +85,7 @@
         </label>
     </div>
 </div>
+@endif
 
 
 <div class="mt-1">

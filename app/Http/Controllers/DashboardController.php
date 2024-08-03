@@ -10,7 +10,8 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $userCount = User::all()->count();
         $clientCount = Client::all()->count();
         $projectCount = Project::all()->count();

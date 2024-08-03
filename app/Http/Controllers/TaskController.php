@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Notification;
 
 class TaskController extends Controller
 {
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         try {
             $deadline = $request->query('deadline');
             $status = $request->query('status');
@@ -43,7 +44,8 @@ class TaskController extends Controller
         }
     }
 
-    public function create(){
+    public function create()
+    {
         try {
             $task = new Task();
             $users = User::all();
@@ -57,7 +59,8 @@ class TaskController extends Controller
         }
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $rules = [
             'title' => ['required'],
             'description' => ['required'],
@@ -80,7 +83,8 @@ class TaskController extends Controller
         }
     }
 
-    public function edit(Task $task){
+    public function edit(Task $task)
+    {
         try {
             $users = User::all();
             $clients = Client::all();

@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Log;
 
 class ProjectController extends Controller
 {
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         try {
             $search = $request->query('search');
             $status = $request->query('status');
@@ -48,7 +49,8 @@ class ProjectController extends Controller
         }
     }
 
-    public function create(){
+    public function create()
+    {
         try {
             $user = auth()->user();
             if (!$user->hasRole('admin') && !$user->can('create.projects')) {
@@ -66,7 +68,8 @@ class ProjectController extends Controller
         }
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
 
         $rules = [
             'title' => ['required'],
@@ -85,8 +88,7 @@ class ProjectController extends Controller
 
             // Jika ada gambar dalam request
             if ($request->hasFile('images')) {
-                // Tambahkan media baru ke koleksi 'images/projects'
-                // $project->addMedia($request->file('image'))->toMediaCollection('images/projects'); // add image 
+                // Tambahkan media baru ke koleksi 'images/projects' 
                 $project->addMultipleMediaFromRequest(['images'])
                     ->each(function ($fileAdder) {
                         $fileAdder->toMediaCollection('images/projects');
@@ -99,7 +101,8 @@ class ProjectController extends Controller
         }
     }
 
-    public function edit(Project $project){
+    public function edit(Project $project)
+    {
         
         try {
             $user = auth()->user();
@@ -131,10 +134,6 @@ class ProjectController extends Controller
         
         try {
             if ($request->hasFile('images')) {
-                // Hapus media lama jika ada
-                // if ($project->hasMedia('images/projects')) {
-                //     $project->clearMediaCollection('images/projects');
-                // }
                // Add new media to the collection 'images/projects'
                 foreach ($request->file('images') as $file) {
                     $project->addMedia($file)->toMediaCollection('images/projects');
@@ -149,7 +148,8 @@ class ProjectController extends Controller
         }
     }
 
-    public function detail(Project $project){
+    public function detail(Project $project)
+    {
         try {
             return view('pages.projects.project_detail', compact('project'));
         } catch (\Exception $th) {
@@ -157,7 +157,8 @@ class ProjectController extends Controller
         }
     }
 
-    public function destroy(Project $project){
+    public function destroy(Project $project)
+    {
         try {
             $project->delete();
             return back()->with('success-danger', 'Data berhasil dihapus');
@@ -167,7 +168,8 @@ class ProjectController extends Controller
 
     }
 
-    public function destroyImage(Project $project, $id){
+    public function destroyImage(Project $project, $id)
+    {
        $media = $project->getMedia('images/projects');
 
        $image = $media->where('id', $id)->first();
@@ -176,7 +178,8 @@ class ProjectController extends Controller
        return redirect()->back()->with('success-danger', 'Image berhasil di hapus');
     }
 
-    public function softDelete(){
+    public function softDelete()
+    {
         try {
             $projects = Project::onlyTrashed()->orderBy('created_at','DESC')->paginate(10);
             return view('pages.projects.softdelets',compact(
@@ -187,7 +190,8 @@ class ProjectController extends Controller
         }
     }
 
-    public function restoreData($id){
+    public function restoreData($id)
+    {
         try {
             Project::withTrashed()->find($id)->restore();
             return redirect()->route('softDeletes.projects')->with('success', "Data Recovered Successfully");

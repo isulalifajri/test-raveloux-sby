@@ -7,12 +7,14 @@ use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
-    public function index(){
+    public function index()
+    {
          $data = User::where('id', auth()->id())->first();
         return view('pages.profiles.profile', compact('data'));
     }
 
-    public function updateprofile(Request $request, User $user){
+    public function updateprofile(Request $request, User $user)
+    {
 
         $validatedData = $request->validate([
             'first_name' => ['required', 'string', 'max:250'],
@@ -26,7 +28,8 @@ class ProfileController extends Controller
         return back()->with('success', 'Data Profile Berhasil di update');
     }
 
-    public function uploadImage(Request $request, User $user){
+    public function uploadImage(Request $request, User $user)
+    {
 
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,avif,webp|max:2048',

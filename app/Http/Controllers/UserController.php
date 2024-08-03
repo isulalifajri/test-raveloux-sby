@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         try {
             $users = User::orderBy('created_at','DESC')->paginate(10);
             return view('pages.users.users',compact(
@@ -19,7 +20,8 @@ class UserController extends Controller
     }
 
 
-    public function create(){
+    public function create()
+    {
         try {
             $user = new User();
             return view('pages.users.create', compact('user'));
@@ -29,7 +31,8 @@ class UserController extends Controller
     }
 
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $rules = [
             'first_name' => ['required'],
             'last_name' => ['nullable'],
@@ -64,7 +67,8 @@ class UserController extends Controller
         }
     }
 
-    public function edit(User $user){
+    public function edit(User $user)
+    {
         try {
             return view('pages.users.edit', compact('user'));
         } catch (\Exception $th) {
@@ -80,7 +84,6 @@ class UserController extends Controller
             'email' => ['required', 'email', 'max:250', 'unique:users,email,'.$user->id],
             'address' => ['required'],
             'phone_number' => ['required','numeric'],
-            'password' => ['required'],
         ]);
         try {
     
@@ -118,7 +121,8 @@ class UserController extends Controller
         }
     }
 
-    public function destroy(User $user){
+    public function destroy(User $user)
+    {
 
         try {
             $user->delete();
@@ -130,7 +134,8 @@ class UserController extends Controller
 
     }
 
-    public function softDelete(){
+    public function softDelete()
+    {
         try {
             $users = User::onlyTrashed()->orderBy('created_at','DESC')->paginate(10);
             return view('pages.users.softdelets',compact(
@@ -141,7 +146,8 @@ class UserController extends Controller
         }
     }
 
-    public function restoreData($id){
+    public function restoreData($id)
+    {
         try {
             User::withTrashed()->find($id)->restore();
             return redirect()->route('softDeletes.users')->with('success', "Data Recovered Successfully");

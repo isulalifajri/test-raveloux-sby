@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         try {
             $user = auth()->user();
             $query = Client::orderBy('created_at','DESC');
@@ -32,7 +33,8 @@ class ClientController extends Controller
     }
 
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $rules = [
             'contact_name' => ['required'],
             'contact_email' => ['required','unique:clients'],
@@ -58,7 +60,8 @@ class ClientController extends Controller
         }
     }
 
-    public function edit(Client $client){
+    public function edit(Client $client)
+    {
         try {
             return view('pages.clients.edit', compact('client'));
         } catch (\Exception $th) {
@@ -88,7 +91,8 @@ class ClientController extends Controller
         }
     }
 
-    public function destroy(Client $client){
+    public function destroy(Client $client)
+    {
 
         try {
             $client->delete();
@@ -99,7 +103,8 @@ class ClientController extends Controller
 
     }
 
-    public function softDelete(){
+    public function softDelete()
+    {
         try {
             $user = auth()->user();
             $query =  Client::onlyTrashed()->orderBy('created_at','DESC');
@@ -116,7 +121,8 @@ class ClientController extends Controller
         }
     }
 
-    public function restoreData($id){
+    public function restoreData($id)
+    {
         try {
             Client::withTrashed()->find($id)->restore();
             return redirect()->route('softDeletes.clients')->with('success', "Data Recovered Successfully");
