@@ -123,22 +123,6 @@
         @enderror
 </div>
 
-{{-- @if(request()->segment(count(request()->segments())) == 'create')    
-    <div class="mt-1">
-        <label class="form-label" for="image-prv">Image</label>
-        <img class="img-preview img-fluid mb-3 col-sm-2" alt="">
-        <div class="input-group input-group-merge">
-            <input
-            type="file"
-            accept="image/png, image/gif, image/jpeg, image/jpg, image/webp, image/avif"
-            name="image"
-            class="form-control @error('image') is-invalid @enderror"
-            id="images-prv" onchange="previewImage()" />
-        </div>
-        <span style="font-size: 11px">*Only uploading image is allowed</span>
-    </div>
-@endif --}}
-
 
 <div class="mt-1">
     <label class="form-label" for="images-prv-0">Images</label>
@@ -169,21 +153,6 @@
 </div>
 
 
-
-{{-- @push('js')
-
-    <script>
-        function previewImage(){
-        const image =  document.querySelector('#images-prv');
-        const imgPreview = document.querySelector('.img-preview');
-
-        imgPreview.style.display = 'block';
-
-        const blob = URL.createObjectURL(image.files[0]);
-            imgPreview.src = blob;
-        }
-    </script>
-@endpush --}}
 
 @push('js')
 <script>
