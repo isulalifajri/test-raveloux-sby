@@ -52,8 +52,6 @@
         <!-- Image previews will be inserted here -->
     </div>
 
-    @dump(['Total Image' => $project->getMedia('images/projects')->count()])
-
     @if ($project->getMedia('images/projects')->count() < 8)
         <div id="input-container">
             <div class="input-group input-group-merge mb-3" id="input-group" data-index="0">
