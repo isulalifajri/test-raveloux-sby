@@ -70,7 +70,7 @@
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{{ route('password.request') }}"><i class="align-middle me-1" data-feather="settings"></i> Reset Password</a>
                     <div class="dropdown-divider"></div>
-                    <form action="/logout" method="POST">
+                    <form action="{{ route('logout') }}" method="POST">
                         @csrf
                           <button type="submit" class="dropdown-item"><i class="fa-solid fa-right-from-bracket"></i> Log out</button>
                     </form>
